@@ -1,0 +1,194 @@
+<div class="container py-4">
+  
+  <!-- Naslov -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <h1 class="h3 fw-bold text-dark mb-1">
+        <i class="bi bi-cart3 me-2 text-primary"></i> Elektronska korpa (E-korpa)
+      </h1>
+      <p class="text-muted small mb-0">Pregledajte izabrane proizvode grupisane po štamparijama i izvršite sigurnu potvrdu porudžbine.</p>
+    </div>
+  </div>
+
+  <!-- Ako je korpa prazna -->
+  @if (!cartItems || cartItems.length === 0) {
+    <div class="card shadow-sm border-0 rounded-4 p-5 text-center bg-white text-muted">
+      <i class="bi bi-cart-x fs-1 d-block mb-3 text-secondary"></i>
+      <h4 class="h5 fw-semibold text-dark">Vaša e-korpa je trenutno prazna.</h4>
+      <p class="small text-muted mb-4">Istražite ponudu proizvoda i dodajte artikle u korpu.</p>
+      <div>
+        <button (click)="goToSearch()" class="btn btn-primary px-4 py-2 rounded-3 fw-semibold shadow-sm">
+          <i class="bi bi-search me-1"></i> Pretraži proizvode
+        </button>
+      </div>
+    </div>
+  }
+
+  <!-- Prikaz stavki grupisanih po štamparijama -->
+  @for (group of groupedCart; track group.printerName) {
+    <div class="card shadow-sm border-0 rounded-4 p-4 mb-4 bg-white">
+      
+      <div class="d-flex align-items-center mb-3">
+        <div class="bg-primary bg-opacity-10 text-primary rounded-circle p-2 me-2 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+          <i class="bi bi-shop fs-5"></i>
+        </div>
+        <div>
+          <h3 class="h5 fw-bold text-dark mb-0">Štamparija: {{ group.printerName }}</h3>
+          <span class="text-muted small"><i class="bi bi-geo-alt me-1"></i> {{ group.city }}</span>
+        </div>
+      </div>
+      
+      <div class="table-responsive rounded-3 border mb-3">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th scope="col" class="py-3 px-3">Naziv proizvoda</th>
+              <th scope="col" class="py-3 px-3">Kol.</th>
+              <th scope="col" class="py-3 px-3">Tip štampe</th>
+              <th scope="col" class="py-3 px-3">Ukupna cena (RSD)</th>
+              <th scope="col" class="py-3 px-3 text-center" style="width: 100px;">Akcija</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of group.items; track item.name) {
+              <tr>
+                <td class="py-3 px-3 fw-semibold text-dark">{{ item.name }}</td>
+                <td class="py-3 px-3">{{ item.quantity }}</td>
+                <td class="py-3 px-3">
+                  <span class="badge bg-secondary bg-opacity-10 text-dark px-2 py-1">{{ item.printType }}</span>
+                </td>
+                <td class="py-3 px-3 fw-semibold text-success">{{ item.totalPrice }} RSD</td>
+                <td class="py-3 px-3 text-center">
+                  <button (click)="removeItem(item)" class="btn btn-outline-danger btn-sm px-3 fw-semibold">
+                    Ukloni
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="text-end fw-bold text-dark fs-6 bg-light p-3 rounded-3 border">
+        Ukupno za ovu štampariju: <span class="text-success">{{ group.printerTotal }} RSD</span>
+      </div>
+
+    </div>
+  }
+
+  <!-- Ukupan iznos i dugmad za navigaciju/potvrdu -->
+  @if (cartItems && cartItems.length > 0) {
+    <div class="card shadow-sm border-0 rounded-4 p-4 bg-white">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+        
+        <div class="d-flex flex-wrap gap-2">
+          <button (click)="goToSearch()" class="btn btn-info text-white px-3 py-2 rounded-3 fw-semibold shadow-sm">
+            <i class="bi bi-cart-plus me-1"></i> Izaberi još proizvoda
+          </button>
+          <button (click)="goToPreparation()" [disabled]="!lastProductId" class="btn btn-secondary px-3 py-2 rounded-3 fw-semibold shadow-sm" [style.opacity]="!lastProductId ? 0.5 : 1">
+            <i class="bi bi-arrow-left me-1"></i> Nazad na pripremu
+          </button>
+        </div>
+
+        <div class="d-flex align-items-center gap-4">
+          <h3 class="h5 fw-bold text-dark mb-0">Sveukupno: <span class="text-success">{{ grandTotal }} RSD</span></h3>
+          <button (click)="confirmOrder()" class="btn btn-success px-4 py-2.5 rounded-3 fw-bold shadow-sm fs-6">
+            <i class="bi bi-check-circle-fill me-1"></i> POTVRDI
+          </button>
+        </div>
+
+      </div>
+    </div>
+  }
+
+  <!-- ==================== MODAL ZA TEST PLAĆANJE ==================== -->
+  @if (showCheckoutModal) {
+    <div class="modal fade show d-block" tabindex="-1" style="background: rgba(0,0,0,0.5); backdrop-filter: blur(3px);">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg border-0 rounded-4 p-3">
+          
+          <div class="modal-header border-0 pb-0">
+            <div>
+              <h3 class="modal-title h5 fw-bold text-dark">
+                <i class="bi bi-credit-card-2-front-fill me-2 text-primary"></i> Test plaćanje karticom
+              </h3>
+              <p class="text-muted small mb-0">Unesite podatke za naplatu (Stripe Test Mode / PayPal Sandbox):</p>
+            </div>
+            <button type="button" class="btn-close" (click)="closeCheckoutModal()"></button>
+          </div>
+
+          <div class="modal-body">
+            
+            <!-- Tip kartice -->
+            <div class="mb-3">
+              <label class="form-label small fw-semibold text-secondary">Tip kartice:</label>
+              <select class="form-select rounded-3 py-2" [(ngModel)]="paymentData.cardType">
+                <option value="Visa">Visa</option>
+                <option value="MasterCard">MasterCard</option>
+                <option value="DinaCard">DinaCard</option>
+              </select>
+            </div>
+
+            <!-- Broj kartice -->
+            <div class="mb-3">
+              <label class="form-label small fw-semibold text-secondary">Broj kartice:</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-end-0 rounded-start-3">
+                  <i class="bi bi-credit-card text-muted"></i>
+                </span>
+                <input 
+                  type="text" 
+                  class="form-control border-start-0 rounded-end-3 py-2" 
+                  [(ngModel)]="paymentData.cardNumber" 
+                  placeholder="4532 XXXX XXXX XXXX"
+                >
+              </div>
+            </div>
+
+            <!-- Datum i CVC -->
+            <div class="row g-3 mb-3">
+              <div class="col-6">
+                <label class="form-label small fw-semibold text-secondary">Datum (MM/GG):</label>
+                <input 
+                  type="text" 
+                  class="form-control rounded-3 py-2" 
+                  [(ngModel)]="paymentData.expiryDate" 
+                  placeholder="12/28"
+                >
+              </div>
+              <div class="col-6">
+                <label class="form-label small fw-semibold text-secondary">CVC kod:</label>
+                <input 
+                  type="password" 
+                  class="form-control rounded-3 py-2" 
+                  [(ngModel)]="paymentData.cvc" 
+                  placeholder="123" 
+                  maxlength="4"
+                >
+              </div>
+            </div>
+
+            <!-- Poruka o grešci pri plaćanju -->
+            @if (paymentError) {
+              <div class="alert alert-danger py-2 px-3 rounded-3 small fw-semibold mb-0 mt-3 d-flex align-items-center">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ paymentErrorMsg }}
+              </div>
+            }
+
+          </div>
+
+          <div class="modal-footer border-0 pt-0">
+            <button type="button" class="btn btn-secondary px-3 py-2 rounded-3 fw-semibold" (click)="closeCheckoutModal()">
+              Otkaži
+            </button>
+            <button type="button" class="btn btn-primary px-4 py-2 rounded-3 fw-semibold shadow-sm" (click)="processPaymentAndOrder()">
+              Plati i potvrdi
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  }
+
+</div>

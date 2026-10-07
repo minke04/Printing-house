@@ -1,0 +1,113 @@
+<div class="container py-4">
+  
+  <!-- Zaglavlje sa naslovom -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <h1 class="h3 fw-bold text-dark mb-1">
+        <i class="bi bi-search me-2 text-success"></i> Pretraga proizvoda
+      </h1>
+      <p class="text-muted small mb-0">Pronađite željene proizvode po nazivu i kategoriji, pregledajte ponude štamparija i detalje.</p>
+    </div>
+  </div>
+
+  <!-- Forma za pretragu -->
+  <div class="card shadow-sm border-0 rounded-4 p-4 mb-4 bg-white">
+    <div class="row g-3 align-items-end">
+      
+      <!-- Naziv proizvoda -->
+      <div class="col-md-6">
+        <label class="form-label small fw-semibold text-secondary">Naziv proizvoda:</label>
+        <div class="input-group">
+          <span class="input-group-text bg-light border-end-0 rounded-start-3">
+            <i class="bi bi-tag-fill text-muted"></i>
+          </span>
+          <input 
+            type="text" 
+            class="form-control border-start-0 rounded-end-3 py-2" 
+            [(ngModel)]="searchName" 
+            placeholder="Pretraži po nazivu..."
+          >
+        </div>
+      </div>
+
+      <!-- Kategorija -->
+      <div class="col-md-4">
+        <label class="form-label small fw-semibold text-secondary">Kategorija:</label>
+        <select class="form-select rounded-3 py-2" [(ngModel)]="selectedCategory">
+          <option value="all">Sve kategorije</option>
+          @for (cat of categories; track cat.name) {
+            <option [value]="cat.name">{{ cat.name }}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Dugme za pretragu -->
+      <div class="col-md-2 d-grid">
+        <button (click)="search()" class="btn btn-primary py-2 rounded-3 fw-semibold shadow-sm">
+          <i class="bi bi-search me-1"></i> Pretraži
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Tabela sa rezultatima pretrage -->
+  @if (products && products.length > 0) {
+    <div class="card shadow-sm border-0 rounded-4 p-4 mb-4 bg-white">
+      <h2 class="h5 fw-bold text-dark mb-3">Rezultati pretrage</h2>
+      
+      <div class="table-responsive rounded-3 border">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th scope="col" class="py-3 px-3 text-center" style="width: 80px;">Slika</th>
+              <th scope="col" class="py-3 px-3">Naziv</th>
+              <th scope="col" class="py-3 px-3">Kategorija</th>
+              <th scope="col" class="py-3 px-3">Štamparija</th>
+              <th scope="col" class="py-3 px-3">Cena (RSD)</th>
+              <th scope="col" class="py-3 px-3 text-center" style="width: 120px;">Akcija</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (prod of products; track prod._id) {
+              <tr>
+                <td class="py-3 px-3 text-center">
+                  <img 
+                    [src]="prod.imageUrl && prod.imageUrl.startsWith('data:') ? prod.imageUrl : 'http://localhost:4000/uploads/' + (prod.imageUrl || 'default_profile_image.jpg')" 
+                    alt="Proizvod" 
+                    class="rounded-3 border object-fit-cover shadow-sm"
+                    style="width: 50px; height: 50px;"
+                  >
+                </td>
+                <td class="py-3 px-3 fw-semibold text-dark">{{ prod.name }}</td>
+                <td class="py-3 px-3">
+                  <span class="badge bg-secondary bg-opacity-10 text-dark px-2 py-1">{{ prod.category }}</span>
+                </td>
+                <td class="py-3 px-3 text-muted">{{ prod.printerName }}</td>
+                <td class="py-3 px-3 fw-semibold text-success">{{ prod.unitPrice }}</td>
+                <td class="py-3 px-3 text-center">
+                  <button (click)="goToDetails(prod._id)" class="btn btn-outline-success btn-sm px-3 fw-semibold">
+                    Detalji
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  } @else {
+    <div class="card shadow-sm border-0 rounded-4 p-5 mb-4 text-center bg-white text-muted">
+      <i class="bi bi-inbox fs-1 d-block mb-2 text-secondary"></i>
+      Nema pronađenih proizvoda koji odgovaraju zadatim kriterijumima.
+    </div>
+  }
+
+  <!-- Dugme za povratak nazad -->
+  <div>
+    <button (click)="goBack()" class="btn btn-secondary px-4 py-2 rounded-3 fw-semibold shadow-sm">
+      <i class="bi bi-arrow-left me-1"></i> Nazad
+    </button>
+  </div>
+
+</div>

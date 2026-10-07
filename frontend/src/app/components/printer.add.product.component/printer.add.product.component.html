@@ -1,0 +1,206 @@
+<div class="container py-4" style="max-width: 900px;">
+  
+  <!-- Naslov -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <h1 class="h3 fw-bold text-dark mb-1">
+        <i class="bi bi-plus-circle-fill me-2 text-success"></i> Dodavanje novog proizvoda
+      </h1>
+      <p class="text-muted small mb-0">Popunite podatke o novom proizvodu, definišite cene, lager i dodatne usluge štampe.</p>
+    </div>
+  </div>
+
+  <!-- Poruke o uspehu ili grešci -->
+  @if (successMessage) {
+    <div class="alert alert-success py-2 px-3 rounded-3 small fw-semibold d-flex align-items-center shadow-sm mb-4">
+      <i class="bi bi-check-circle-fill me-2 fs-5"></i> {{ successMessage }}
+    </div>
+  }
+  @if (errorMessage) {
+    <div class="alert alert-danger py-2 px-3 rounded-3 small fw-semibold d-flex align-items-center shadow-sm mb-4">
+      <i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i> {{ errorMessage }}
+    </div>
+  }
+
+  <!-- Glavna forma -->
+  <div class="card shadow-sm border-0 rounded-4 p-4 bg-white">
+    <form (ngSubmit)="onSubmit()" class="row g-3">
+      
+      <!-- Šifra proizvoda -->
+      <div class="col-md-6">
+        <label class="form-label small fw-semibold text-secondary">Šifra (kod) proizvoda:</label>
+        <input 
+          type="text" 
+          [(ngModel)]="product.code" 
+          name="code" 
+          required 
+          class="form-control rounded-3 py-2" 
+          placeholder="npr. PRD-001"
+        >
+      </div>
+
+      <!-- Naziv proizvoda -->
+      <div class="col-md-6">
+        <label class="form-label small fw-semibold text-secondary">Naziv proizvoda:</label>
+        <input 
+          type="text" 
+          [(ngModel)]="product.name" 
+          name="name" 
+          required 
+          class="form-control rounded-3 py-2" 
+          placeholder="Unesite naziv proizvoda"
+        >
+      </div>
+
+      <!-- Kategorija -->
+      <div class="col-md-6">
+        <label class="form-label small fw-semibold text-secondary">Kategorija:</label>
+        <select 
+          [(ngModel)]="product.category" 
+          (change)="onCategoryChange()" 
+          name="category" 
+          class="form-select rounded-3 py-2"
+        >
+          <option value="" disabled selected>Izaberite kategoriju</option>
+          @for (cat of categories; track cat) {
+            <option [value]="cat">{{ cat }}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Podkategorija -->
+      <div class="col-md-6">
+        <label class="form-label small fw-semibold text-secondary">Podkategorija:</label>
+        <select 
+          [(ngModel)]="product.subcategory" 
+          name="subcategory" 
+          class="form-select rounded-3 py-2"
+        >
+          <option value="" disabled selected>Izaberite podkategoriju</option>
+          @for (sub of availableSubcategories; track sub) {
+            <option [value]="sub">{{ sub }}</option>
+          }
+        </select>
+      </div>
+
+      <!-- Jedinična cena -->
+      <div class="col-md-6">
+        <label class="form-label small fw-semibold text-secondary">Jedinična cena (RSD):</label>
+        <input 
+          type="number" 
+          [(ngModel)]="product.unitPrice" 
+          name="unitPrice" 
+          required 
+          class="form-control rounded-3 py-2" 
+          placeholder="0.00"
+        >
+      </div>
+
+      <!-- Količina na lageru -->
+      <div class="col-md-6">
+        <label class="form-label small fw-semibold text-secondary">Količina na lageru:</label>
+        <input 
+          type="number" 
+          [(ngModel)]="product.stockQuantity" 
+          name="stockQuantity" 
+          required 
+          class="form-control rounded-3 py-2" 
+          placeholder="0"
+        >
+      </div>
+
+      <!-- Opis -->
+      <div class="col-12">
+        <label class="form-label small fw-semibold text-secondary">Opis:</label>
+        <textarea 
+          [(ngModel)]="product.description" 
+          name="description" 
+          rows="3" 
+          required 
+          class="form-control rounded-3" 
+          placeholder="Unesite detaljan opis proizvoda..."
+        ></textarea>
+      </div>
+
+      <!-- Dostupne boje -->
+      <div class="col-md-6">
+        <label class="form-label small fw-semibold text-secondary">Dostupne boje (odvojene zarezom):</label>
+        <input 
+          type="text" 
+          [(ngModel)]="product.availableColorsStr" 
+          name="availableColorsStr" 
+          class="form-control rounded-3 py-2" 
+          placeholder="npr. Bela, Crna, Crvena"
+        >
+      </div>
+
+      <!-- Slika proizvoda -->
+      <div class="col-md-6">
+        <label class="form-label small fw-semibold text-secondary">Slika proizvoda:</label>
+        <input 
+          type="file" 
+          (change)="onImageSelected($event)" 
+          accept="image/*" 
+          class="form-control rounded-3 py-1.5"
+        >
+      </div>
+
+      <!-- Sekcija za dodatne usluge / preslikače -->
+      <div class="col-12 mt-4">
+        <div class="p-4 rounded-4 bg-light border border-dashed">
+          <h4 class="h6 fw-bold text-dark mb-3">
+            <i class="bi bi-tools me-1 text-primary"></i> Dodatne usluge / Preslikači
+          </h4>
+          
+          <div class="row g-2 align-items-end mb-3">
+            <div class="col-md-3">
+              <label class="form-label small text-muted">ID usluge</label>
+              <input type="text" [(ngModel)]="newService.serviceId" name="serviceId" class="form-control form-control-sm rounded-3" placeholder="npr. USL-1">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small text-muted">Tip štampe</label>
+              <input type="text" [(ngModel)]="newService.printType" name="printType" class="form-control form-control-sm rounded-3" placeholder="Tip štampe">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label small text-muted">Doplata po kom.</label>
+              <input type="number" [(ngModel)]="newService.additionalPricePerPiece" name="additionalPricePerPiece" class="form-control form-control-sm rounded-3" placeholder="0 RSD">
+            </div>
+            <div class="col-md-2">
+              <button type="button" (click)="addPrintService()" class="btn btn-success btn-sm w-100 fw-semibold rounded-3 shadow-sm">
+                <i class="bi bi-plus-lg me-1"></i> Dodaj
+              </button>
+            </div>
+          </div>
+
+         @if (product.printServices && product.printServices.length > 0) {
+            <ul class="list-group shadow-sm">
+              @for (s of product.printServices; track s.serviceId; let i = $index) {
+                <li class="list-group-item d-flex justify-content-between align-items-center py-2 px-3 small">
+                  <div>
+                    <strong class="text-dark">{{ s.serviceId }}</strong> — {{ s.printType }} 
+                    <span class="badge bg-success bg-opacity-10 text-success ms-2">+{{ s.additionalPricePerPiece }} RSD</span>
+                  </div>
+                  <button type="button" (click)="removeService(i)" class="btn btn-link text-danger text-decoration-none p-0 fw-semibold small">
+                    [Ukloni]
+                  </button>
+                </li>
+              }
+            </ul>
+          }
+        </div>
+      </div>
+
+      <!-- Akciona dugmad -->
+      <div class="col-12 d-flex justify-content-between align-items-center mt-4 pt-3 border-top">
+        <button type="button" (click)="goBack()" class="btn btn-secondary px-4 py-2 rounded-3 fw-semibold shadow-sm">
+          <i class="bi bi-arrow-left me-1"></i> Nazad
+        </button>
+        <button type="submit" class="btn btn-primary px-4 py-2 rounded-3 fw-bold shadow-sm">
+          <i class="bi bi-save me-1"></i> Sačuvaj proizvod
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+</div>

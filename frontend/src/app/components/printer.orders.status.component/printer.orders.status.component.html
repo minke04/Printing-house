@@ -1,0 +1,109 @@
+<div class="container py-4" style="max-width: 1000px;">
+  
+  <!-- Naslov -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <h1 class="h3 fw-bold text-dark mb-1">
+        <i class="bi bi-cart-check-fill me-2 text-primary"></i> Upravljanje narudžbinama klijenta
+      </h1>
+      <p class="text-muted small mb-0">Pregledajte aktivne narudžbine, pratite statuse i ažurirajte tok izrade proizvoda.</p>
+    </div>
+  </div>
+
+  <!-- Poruke o uspehu ili grešci -->
+  @if (successMessage) {
+    <div class="alert alert-success py-2 px-3 rounded-3 small fw-semibold d-flex align-items-center shadow-sm mb-4">
+      <i class="bi bi-check-circle-fill me-2 fs-5"></i> {{ successMessage }}
+    </div>
+  }
+  @if (errorMessage) {
+    <div class="alert alert-danger py-2 px-3 rounded-3 small fw-semibold d-flex align-items-center shadow-sm mb-4">
+      <i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i> {{ errorMessage }}
+    </div>
+  }
+
+  <!-- Tabela narudžbina -->
+  @if (orders && orders.length > 0) {
+    <div class="card shadow-sm border-0 rounded-4 mb-4 bg-white overflow-hidden">
+      <div class="table-responsive">
+        <table class="table align-middle mb-0">
+          <thead class="table-light text-secondary small uppercase">
+            <tr>
+              <th class="py-3 ps-4">Broj fakture</th>
+              <th class="py-3">Klijent</th>
+              <th class="py-3">Ukupan iznos</th>
+              <th class="py-3">Datum</th>
+              <th class="py-3">Trenutni status</th>
+              <th class="py-3 text-center pe-4">Akcija</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (order of orders; track order._id) {
+              <tr>
+                <td class="ps-4 fw-semibold font-monospace text-secondary">{{ order.invoiceId }}</td>
+                <td class="fw-bold text-dark"><i class="bi bi-person-circle me-1 text-muted"></i> {{ order.clientUsername }}</td>
+                <td class="fw-semibold text-success">{{ order.totalAmount }} RSD</td>
+                <td class="text-muted small">{{ order.createdAt | date:'dd.MM.yyyy. HH:mm' }}</td>
+                <td>
+                  <span class="badge px-3 py-2 rounded-pill fw-semibold" [ngClass]="{
+                    'bg-secondary text-white': order.status === 'naruceno' || order.status === 'наручено',
+                    'bg-info text-dark': order.status === 'placeno' || order.status === 'плаћено',
+                    'bg-warning text-dark': order.status === 'u stampi' || order.status === 'у штампи',
+                    'bg-primary text-white': order.status === 'isporuceno' || order.status === 'испоручено',
+                    'bg-success text-white': order.status === 'primljeno' || order.status === 'примљено'
+                  }">
+                    {{ order.status }}
+                  </span>
+                </td>
+                <td class="text-center pe-4">
+                  <div class="d-flex justify-content-center align-items-center">
+                    <!-- Dugme za prelazak iz 'naruceno' / 'placeno' u 'u stampi' -->
+                    @if (order.status === 'naruceno' || order.status === 'placeno') {
+                      <button 
+                        (click)="updateStatus(order._id)" 
+                        class="btn btn-warning btn-sm px-3 py-1.5 rounded-3 fw-semibold shadow-sm text-dark"
+                      >
+                        <i class="bi bi-printer-fill me-1"></i> Prebaci u štampu
+                      </button>
+                    }
+
+                    <!-- Dugme za prelazak iz 'u stampi' u 'isporuceno' -->
+                    @if (order.status === 'u stampi') {
+                      <button 
+                        (click)="updateStatus(order._id)" 
+                        class="btn btn-success btn-sm px-3 py-1.5 rounded-3 fw-semibold shadow-sm text-white"
+                      >
+                        <i class="bi bi-check2-all me-1"></i> Prebaci u isporučeno
+                      </button>
+                    }
+
+                    <!-- Završena stanja (isporučeno ili primljeno) gde štampar nema više akcija -->
+                    @if (order.status === 'isporuceno' || order.status === 'испоручено' || order.status === 'primljeno' || order.status === 'примљено') {
+                      <span class="text-muted small fst-italic">
+                        <i class="bi bi-check-all text-success me-1"></i> Završeno
+                      </span>
+                    }
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  } @else {
+    <div class="card shadow-sm border-0 rounded-4 p-5 text-center bg-white text-muted mb-4">
+      <i class="bi bi-inbox fs-1 d-block mb-3 text-secondary"></i>
+      <h4 class="h5 fw-semibold text-dark">Trenutno nema narudžbina u sistemu.</h4>
+      <p class="small text-muted mb-0">Nove porudžbine klijenata će se automatski pojaviti ovde.</p>
+    </div>
+  }
+
+  <!-- Dugme za nazad -->
+  <div>
+    <button (click)="goBack()" class="btn btn-secondary px-4 py-2 rounded-3 fw-semibold shadow-sm">
+      <i class="bi bi-arrow-left me-1"></i> Nazad
+    </button>
+  </div>
+
+</div>

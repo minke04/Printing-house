@@ -1,0 +1,78 @@
+<div class="container py-4" style="max-width: 800px;" *ngIf="product">
+  
+  <!-- Dugme za povratak -->
+  <div class="mb-4">
+    <a routerLink="/" class="btn btn-outline-secondary btn-sm px-3 py-2 rounded-3 fw-semibold shadow-sm text-decoration-none">
+      <i class="bi bi-arrow-left me-1"></i> Nazad
+    </a>
+  </div>
+
+  <!-- Naziv proizvoda -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <h1 class="h3 fw-bold text-dark mb-1">
+        <i class="bi bi-box-seam me-2 text-primary"></i> {{ product.name }}
+      </h1>
+      <p class="text-muted small mb-0">Detaljne informacije o proizvodu, štampariji, cenama i ocenama korisnika.</p>
+    </div>
+  </div>
+
+  <div class="card shadow-sm border-0 rounded-4 p-4 bg-white">
+    
+    <!-- Glavna slika proizvoda -->
+    <div class="rounded-4 bg-light overflow-hidden shadow-sm d-flex align-items-center justify-content-center mb-4 border" style="height: 320px;">
+      <img 
+        [src]="product.imageUrl && product.imageUrl.startsWith('data:') ? product.imageUrl : 'http://localhost:4000/uploads/' + (product.imageUrl || 'default_profile_image.jpg')" 
+        alt="Slika proizvoda" 
+        class="w-100 h-100 object-fit-contain p-2"
+      >
+    </div>
+
+    <!-- Informacije o proizvodu -->
+    <div class="p-4 rounded-4 bg-light border">
+      <div class="row g-3">
+        
+        <div class="col-md-6">
+          <span class="text-muted small d-block">Štamparija:</span>
+          <span class="fw-bold text-dark"><i class="bi bi-shop me-1 text-secondary"></i> {{ product.printerName }}</span>
+        </div>
+
+        <div class="col-md-6">
+          <span class="text-muted small d-block">Kategorija:</span>
+          <span class="fw-bold text-dark">{{ product.category }} / {{ product.subcategory }}</span>
+        </div>
+
+        <div class="col-md-6">
+          <span class="text-muted small d-block">Cena:</span>
+          <span class="h5 fw-bold text-success mb-0">{{ product.unitPrice }} RSD</span>
+        </div>
+
+        <div class="col-12">
+          <span class="text-muted small d-block">Opis:</span>
+          <p class="text-dark mb-0 small lh-base">{{ product.description }}</p>
+        </div>
+
+        <!-- Lajkovi i dislajkovi -->
+        <div class="col-12 pt-3 border-top mt-3">
+          <div class="d-flex gap-3">
+            <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill fw-semibold">
+              <i class="bi bi-hand-thumbs-up-fill me-1"></i> Sviđa mi se: {{ product.likesCount || 0 }}
+            </span>
+            <span class="badge bg-danger bg-opacity-10 text-danger px-3 py-2 rounded-pill fw-semibold">
+              <i class="bi bi-hand-thumbs-down-fill me-1"></i> Ne sviđa mi se: {{ product.dislikesCount || 0 }}
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Ako proizvod ne postoji / učitava se -->
+<div *ngIf="!product" class="container py-5 text-center">
+  <div class="spinner-border text-primary mb-3" role="status"></div>
+  <p class="text-muted fw-semibold">Učitavanje detalja proizvoda...</p>
+</div>

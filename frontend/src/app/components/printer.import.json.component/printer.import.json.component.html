@@ -1,0 +1,114 @@
+<div class="container py-4" style="max-width: 1000px;">
+  
+  <!-- Naslov -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <h1 class="h3 fw-bold text-dark mb-1">
+        <i class="bi bi-file-earmark-arrow-up-fill me-2 text-info"></i> Uvoz lager liste iz JSON fajla
+      </h1>
+      <p class="text-muted small mb-0">Otpremite JSON fajl sa lagerom, pregledajte proizvode, dodajte slike i sačuvajte ih u bazu.</p>
+    </div>
+  </div>
+
+  <!-- Poruke o uspehu ili grešci -->
+  @if (successMessage) {
+    <div class="alert alert-success py-2 px-3 rounded-3 small fw-semibold d-flex align-items-center shadow-sm mb-4">
+      <i class="bi bi-check-circle-fill me-2 fs-5"></i> {{ successMessage }}
+    </div>
+  }
+  @if (errorMessage) {
+    <div class="alert alert-danger py-2 px-3 rounded-3 small fw-semibold d-flex align-items-center shadow-sm mb-4">
+      <i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i> {{ errorMessage }}
+    </div>
+  }
+
+  <!-- Korak 1: Izbor fajla -->
+  <div class="card shadow-sm border-0 rounded-4 p-4 mb-4 bg-white border-dashed">
+    <label class="form-label fw-semibold text-secondary mb-2">
+      <i class="bi bi-folder2-open me-1"></i> Izaberite JSON fajl sa lagerom:
+    </label>
+    <input 
+      type="file" 
+      (change)="onFileSelected($event)" 
+      accept=".json" 
+      class="form-control form-control-sm rounded-3 shadow-sm" 
+      style="max-width: 350px;"
+    >
+  </div>
+
+  <!-- Korak 2: Pregled učitanih proizvoda i dodavanje slika -->
+  @if (importedData) {
+    <div class="card shadow-sm border-0 rounded-4 p-4 mb-4 bg-white">
+      
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 pb-3 border-bottom">
+        <h3 class="h5 fw-bold text-dark mb-0">
+          <i class="bi bi-shop me-1 text-secondary"></i> Štamparija: <span class="text-primary">{{ importedData.nazivStamparije }}</span>
+        </h3>
+        <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-semibold">
+          Ukupno proizvoda: {{ importedData?.proizvodi?.length || 0 }}
+        </span>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table align-middle mb-0">
+          <thead class="table-light text-secondary small uppercase">
+            <tr>
+              <th class="py-3 ps-3">Šifra</th>
+              <th class="py-3">Naziv</th>
+              <th class="py-3">Kategorija</th>
+              <th class="py-3">Cena (RSD)</th>
+              <th class="py-3">Količina</th>
+              <th class="py-3 text-center pe-3">Slika proizvoda</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (p of importedData.proizvodi; track p.code) {
+              <tr>
+                <td class="ps-3 fw-semibold text-secondary">{{ p.code }}</td>
+                <td class="fw-bold text-dark">{{ p.name }}</td>
+                <td class="text-muted small">{{ p.category }} / {{ p.subcategory }}</td>
+                <td class="fw-semibold text-success">{{ p.unitPrice }} RSD</td>
+                <td>{{ p.stockQuantity }}</td>
+                <td class="text-center pe-3">
+                  <div class="d-flex flex-column align-items-center gap-2">
+                    @if (p.imageUrl) {
+                      <img 
+                        [src]="p.imageUrl" 
+                        alt="Slika" 
+                        class="rounded border shadow-sm object-fit-cover" 
+                        style="width: 45px; height: 45px;"
+                      >
+                    }
+                    <input 
+                      type="file" 
+                      (change)="onProductImageSelected($event, p)" 
+                      accept="image/*" 
+                      class="form-control form-control-sm shadow-sm" 
+                      style="font-size: 11px; max-width: 160px;"
+                    >
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Dugme za konačno čuvanje u bazu -->
+      <div class="mt-4 pt-3 border-top text-end">
+        <button (click)="saveImportedProducts()" class="btn btn-success px-4 py-2 rounded-3 fw-bold shadow-sm">
+          <i class="bi bi-save-fill me-1"></i> Sačuvaj sve proizvode u bazu
+        </button>
+      </div>
+
+    </div>
+  }
+
+  <!-- Dugme za nazad -->
+  <div>
+    <button (click)="goBack()" class="btn btn-secondary px-4 py-2 rounded-3 fw-semibold shadow-sm">
+      <i class="bi bi-arrow-left me-1"></i> Nazad
+    </button>
+  </div>
+
+</div>

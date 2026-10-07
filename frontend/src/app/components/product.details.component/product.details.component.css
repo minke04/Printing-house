@@ -1,0 +1,15 @@
+/* Blago tonirana pozadina */
+:host {
+    display: block;
+    min-height: calc(100vh - 140px);
+    background: #f8f9fa;
+}
+
+/* Efekti kartica i dugmadi */
+.card {
+    transition: all 0.2s ease-in-out;
+}
+
+.btn {
+    transition: all 0.2s ease-in-out;
+}

@@ -1,0 +1,170 @@
+<div class="container py-4">
+  
+  <!-- Zaglavlje sa naslovom i navigacionim akcijama -->
+  <div class="row align-items-center mb-4">
+    <div class="col-md-6 mb-3 mb-md-0">
+      <h1 class="h3 fw-bold text-dark mb-1">
+        <i class="bi bi-person-badge-fill me-2 text-primary"></i> Klijentski profil i porudžbine
+      </h1>
+      <p class="text-muted small mb-0">Pregledajte lične podatke, ažurirajte profil i pratite status svojih porudžbina.</p>
+    </div>
+    <div class="col-md-6 text-md-end">
+      <div class="d-flex justify-content-md-end gap-2">
+        @if(currentRole === 'pravno_lice'){
+            <a routerLink="/client-procurements" class="btn btn-primary fw-semibold px-3 py-2 rounded-3 shadow-sm">
+              <i class="bi bi-file-earmark-text-fill me-1"></i> Javne nabavke
+            </a>
+        }
+        <a routerLink="/client-archive" class="btn btn-warning text-white fw-semibold px-3 py-2 rounded-3 shadow-sm">
+          <i class="bi bi-box-seam me-1"></i> Arhiva proizvoda
+        </a>
+        <a routerLink="/client-product-search" class="btn btn-success fw-semibold px-3 py-2 rounded-3 shadow-sm">
+          <i class="bi bi-search me-1"></i> Pretraži proizvode
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Server poruka o uspehu/obaveštenju -->
+  @if (message) {
+    <div class="alert alert-success d-flex align-items-center rounded-3 p-3 mb-4 shadow-sm" role="alert">
+      <i class="bi bi-check-circle-fill flex-shrink-0 me-2"></i>
+      <div class="small">{{ message }}</div>
+    </div>
+  }
+
+  <!-- ==================== SEKCIJA PROFILA ==================== -->
+  <div class="card shadow-sm border-0 rounded-4 p-4 mb-5 bg-white">
+    <h2 class="h5 fw-bold text-dark mb-4">
+      <i class="bi bi-gear-fill me-2 text-primary"></i> Podešavanja profila
+    </h2>
+
+    <div class="row align-items-center g-4">
+      
+      <!-- Slika profila i upload -->
+      <div class="col-lg-3 text-center border-end-lg">
+        <div class="position-relative d-inline-block mb-3">
+          <img 
+            [src]="profile?.profileImage && profile.profileImage.startsWith('data:') ? profile.profileImage : 'http://localhost:4000/uploads/' + (profile?.profileImage || 'default_profile_image.jpg')" 
+            alt="Profilna slika" 
+            class="rounded-circle shadow-sm border border-3 border-light object-fit-cover"
+            style="width: 130px; height: 130px;"
+          >
+        </div>
+        <div>
+          <label for="formFileProfile" class="form-label small fw-semibold text-secondary">Promeni sliku:</label>
+          <input class="form-control form-control-sm rounded-3" type="file" id="formFileProfile" (change)="onFileSelected($event)" accept="image/*">
+        </div>
+      </div>
+
+      <!-- Forma za podatke profila -->
+      <div class="col-lg-9">
+        <div class="row g-3">
+          
+          <!-- Korisničko ime (Disabled) -->
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold text-muted">Korisničko ime (ne može se menjati):</label>
+            <input type="text" class="form-control rounded-3 bg-light text-muted" [value]="profile?.username" disabled>
+          </div>
+
+          <!-- Email -->
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold text-secondary">Email adresa:</label>
+            <input type="email" class="form-control rounded-3" [(ngModel)]="profile.email" placeholder="Email adresa">
+          </div>
+
+          <!-- Ime -->
+          <div class="col-md-4">
+            <label class="form-label small fw-semibold text-secondary">Ime:</label>
+            <input type="text" class="form-control rounded-3" [(ngModel)]="profile.name" placeholder="Ime">
+          </div>
+
+          <!-- Prezime -->
+          <div class="col-md-4">
+            <label class="form-label small fw-semibold text-secondary">Prezime:</label>
+            <input type="text" class="form-control rounded-3" [(ngModel)]="profile.surname" placeholder="Prezime">
+          </div>
+
+          <!-- Telefon -->
+          <div class="col-md-4">
+            <label class="form-label small fw-semibold text-secondary">Telefon:</label>
+            <input type="text" class="form-control rounded-3" [(ngModel)]="profile.phone" placeholder="Telefon">
+          </div>
+
+          <!-- Dugme za ažuriranje -->
+          <div class="col-12 text-end mt-4">
+            <button (click)="onUpdateProfile()" class="btn btn-primary px-4 py-2 rounded-3 fw-semibold shadow-sm">
+              <i class="bi bi-save-fill me-1"></i> Ažuriraj profil
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== SEKCIJA PORUDŽBINA ==================== -->
+  <div class="card shadow-sm border-0 rounded-4 p-4 bg-white">
+    <h2 class="h5 fw-bold text-dark mb-4">
+      <i class="bi bi-cart-check-fill me-2 text-success"></i> Moje porudžbine
+    </h2>
+
+    @if (orders && orders.length > 0) {
+      <div class="table-responsive rounded-3 border">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th scope="col" class="py-3 px-3">ID fakture</th>
+              <th scope="col" class="py-3 px-3">Štamparija</th>
+              <th scope="col" class="py-3 px-3">Grad</th>
+              <th scope="col" class="py-3 px-3">Proizvodi (Količina)</th>
+              <th scope="col" class="py-3 px-3">Ukupno (RSD)</th>
+              <th scope="col" class="py-3 px-3">Status</th>
+              <th scope="col" class="py-3 px-3 text-center">Akcija</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (ord of orders; track ord._id) {
+              <tr>
+                <td class="py-3 px-3 fw-semibold text-dark">{{ ord.invoiceId }}</td>
+                <td class="py-3 px-3">{{ ord.printerName }}</td>
+                <td class="py-3 px-3 text-muted">{{ ord.city }}</td>
+                <td class="py-3 px-3">
+                  <ul class="list-unstyled mb-0 small">
+                    @for (item of ord.items; track item.name) {
+                      <li class="py-0.5">
+                        <i class="bi bi-dot text-primary"></i> {{ item.name }} <span class="text-muted">({{ item.quantity }})</span>
+                      </li>
+                    }
+                  </ul>
+                </td>
+                <td class="py-3 px-3 fw-semibold text-dark">{{ ord.totalAmount }}</td>
+                <td class="py-3 px-3">
+                  <span class="badge" [ngClass]="ord.status === 'naruceno' ? 'bg-warning bg-opacity-10 text-dark fw-semibold px-2 py-1' : 'bg-secondary bg-opacity-10 text-secondary px-2 py-1'">
+                    {{ ord.status }}
+                  </span>
+                </td>
+                <td class="py-3 px-3 text-center">
+                  @if (ord.status === 'naruceno') {
+                    <button (click)="onCancelOrder(ord._id)" class="btn btn-outline-danger btn-sm px-3 fw-semibold">
+                      Otkaži
+                    </button>
+                  } @else {
+                    <span class="text-muted small fst-italic">Nije dostupno</span>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    } @else {
+      <div class="text-center py-5 border rounded-3 bg-light text-muted">
+        <i class="bi bi-cart-x fs-1 d-block mb-2 text-secondary"></i>
+        Nemate kreiranih porudžbina.
+      </div>
+    }
+  </div>
+
+</div>

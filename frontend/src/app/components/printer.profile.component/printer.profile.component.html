@@ -1,0 +1,152 @@
+<div class="container py-4">
+  
+  <!-- Zaglavlje i akcione opcije -->
+  <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-4">
+    <div>
+      <h1 class="h3 fw-bold text-dark mb-1">
+        <i class="bi bi-shop me-2 text-primary"></i> Profil štamparije
+      </h1>
+      <p class="text-muted small mb-0">Upravljajte podacima štamparije, pregledajte lager, narudžbine i aktivne licitacije.</p>
+    </div>
+    
+    <!-- Akcioni linkovi / dugmići -->
+    <div class="d-flex flex-wrap gap-2">
+      <a routerLink="/printer-add-product" class="btn btn-success btn-sm px-3 py-2 rounded-3 fw-semibold shadow-sm">
+        <i class="bi bi-plus-lg me-1"></i> Dodaj novi proizvod
+      </a>
+      <a routerLink="/printer-products" class="btn btn-primary btn-sm px-3 py-2 rounded-3 fw-semibold shadow-sm">
+        <i class="bi bi-box-seam me-1"></i> Upravljanje lagerom
+      </a>
+      <a routerLink="/printer-import-json" class="btn btn-info btn-sm text-white px-3 py-2 rounded-3 fw-semibold shadow-sm">
+        <i class="bi bi-file-earmark-arrow-up me-1"></i> Uvezi iz JSON fajla
+      </a>
+      <a routerLink="/printer-orders" class="btn btn-warning btn-sm text-dark px-3 py-2 rounded-3 fw-semibold shadow-sm">
+        <i class="bi bi-clipboard-check me-1"></i> Narudžbine
+      </a>
+      <a routerLink="/printer-bids" class="btn btn-purple btn-sm text-white px-3 py-2 rounded-3 fw-semibold shadow-sm" style="background-color: #6f42c1;">
+        <i class="bi bi-hammer me-1"></i> Licitacije
+      </a>
+    </div>
+  </div>
+
+  <!-- Poruke o uspehu ili grešci -->
+  @if (successMessage) {
+    <div class="alert alert-success py-2 px-3 rounded-3 small fw-semibold d-flex align-items-center shadow-sm mb-4">
+      <i class="bi bi-check-circle-fill me-2 fs-5"></i> {{ successMessage }}
+    </div>
+  }
+  @if (errorMessage) {
+    <div class="alert alert-danger py-2 px-3 rounded-3 small fw-semibold d-flex align-items-center shadow-sm mb-4">
+      <i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i> {{ errorMessage }}
+    </div>
+  }
+
+  <!-- Glavna kartica sa profilom -->
+  <div class="card shadow-sm border-0 rounded-4 p-4 bg-white">
+    <div class="row g-4 align-items-center">
+      
+      <!-- Profilna slika i upload -->
+      <div class="col-lg-4 text-center border-end-lg pe-lg-4">
+        <div class="position-relative d-inline-block mb-3">
+          <div class="rounded-circle bg-light overflow-hidden shadow-sm mx-auto border" style="width: 130px; height: 130px;">
+            <img 
+              [src]="printer.profileImage && printer.profileImage !== 'default_profile_image.jpg' ? printer.profileImage : 'default_profile_image.jpg'" 
+              alt="Profilna slika" 
+              class="w-100 h-100 object-fit-cover"
+            >
+          </div>
+        </div>
+        <div>
+          <label class="form-label small fw-semibold text-secondary">Promeni profilnu sliku:</label>
+          <input type="file" (change)="onFileSelected($event)" accept="image/*" class="form-control form-control-sm mx-auto shadow-sm" style="max-width: 220px;">
+        </div>
+      </div>
+
+      <!-- Forma za izmenu podataka -->
+      <div class="col-lg-8">
+        <form (ngSubmit)="updateProfile()" class="row g-3">
+          
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold text-secondary">Korisničko ime (zabranjena promena):</label>
+            <input 
+              type="text" 
+              [(ngModel)]="printer.username" 
+              name="username" 
+              disabled 
+              class="form-control rounded-3 py-2 bg-light text-muted"
+            >
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold text-secondary">Naziv štamparije:</label>
+            <input 
+              type="text" 
+              [(ngModel)]="printer.institutionName" 
+              name="institutionName" 
+              class="form-control rounded-3 py-2"
+            >
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold text-secondary">Ime:</label>
+            <input 
+              type="text" 
+              [(ngModel)]="printer.name" 
+              name="name" 
+              class="form-control rounded-3 py-2"
+            >
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold text-secondary">Prezime:</label>
+            <input 
+              type="text" 
+              [(ngModel)]="printer.surname" 
+              name="surname" 
+              class="form-control rounded-3 py-2"
+            >
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold text-secondary">Imejl:</label>
+            <input 
+              type="email" 
+              [(ngModel)]="printer.email" 
+              name="email" 
+              class="form-control rounded-3 py-2"
+            >
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold text-secondary">Telefon:</label>
+            <input 
+              type="text" 
+              [(ngModel)]="printer.phone" 
+              name="phone" 
+              class="form-control rounded-3 py-2"
+            >
+          </div>
+
+          <div class="col-12">
+            <label class="form-label small fw-semibold text-secondary">Adresa:</label>
+            <input 
+              type="text" 
+              [(ngModel)]="printer.address" 
+              name="address" 
+              class="form-control rounded-3 py-2"
+            >
+          </div>
+
+          <div class="col-12 text-end mt-4">
+            <button type="submit" class="btn btn-primary px-4 py-2 rounded-3 fw-bold shadow-sm">
+              <i class="bi bi-save me-1"></i> Sačuvaj izmene
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,83 @@
+<div class="container py-4">
+  
+  <!-- Naslov -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <h1 class="h3 fw-bold text-dark mb-1">
+        <i class="bi bi-box-seam me-2 text-primary"></i> Upravljanje količinama proizvoda
+      </h1>
+      <p class="text-muted small mb-0">Pregledajte lager svih proizvoda, ažurirajte raspoložive količine i sačuvajte izmene.</p>
+    </div>
+  </div>
+
+  <!-- Poruke o uspehu ili grešci -->
+  @if (successMessage) {
+    <div class="alert alert-success py-2 px-3 rounded-3 small fw-semibold d-flex align-items-center shadow-sm mb-4">
+      <i class="bi bi-check-circle-fill me-2 fs-5"></i> {{ successMessage }}
+    </div>
+  }
+  @if (errorMessage) {
+    <div class="alert alert-danger py-2 px-3 rounded-3 small fw-semibold d-flex align-items-center shadow-sm mb-4">
+      <i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i> {{ errorMessage }}
+    </div>
+  }
+
+  <!-- Tabela sa proizvodima -->
+  @if (products && products.length > 0) {
+    <div class="card shadow-sm border-0 rounded-4 mb-4 bg-white overflow-hidden">
+      <div class="table-responsive">
+        <table class="table align-middle mb-0">
+          <thead class="table-light text-secondary small uppercase">
+            <tr>
+              <th class="py-3 ps-4">Kod</th>
+              <th class="py-3">Naziv proizvoda</th>
+              <th class="py-3">Kategorija</th>
+              <th class="py-3">Cena (RSD)</th>
+              <th class="py-3">Trenutna količina (Lager)</th>
+              <th class="py-3 text-center pe-4">Akcija</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (p of products; track p.code) {
+              <tr>
+                <td class="ps-4 fw-semibold text-secondary">{{ p.code }}</td>
+                <td class="fw-bold text-dark">{{ p.name }}</td>
+                <td class="text-muted small">{{ p.category }} / {{ p.subcategory }}</td>
+                <td class="fw-semibold text-success">{{ p.unitPrice }} RSD</td>
+                <td>
+                  <!-- Input polje za izmenu količine -->
+                  <input 
+                    type="number" 
+                    [(ngModel)]="p.stockQuantity" 
+                    min="0" 
+                    class="form-control form-control-sm rounded-3 shadow-sm" 
+                    style="width: 110px;"
+                  >
+                </td>
+                <td class="text-center pe-4">
+                  <button (click)="updateQuantity(p)" class="btn btn-primary btn-sm px-3 py-1.5 rounded-3 fw-semibold shadow-sm">
+                    <i class="bi bi-save me-1"></i> Sačuvaj
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  } @else {
+    <div class="card shadow-sm border-0 rounded-4 p-5 text-center bg-white text-muted mb-4">
+      <i class="bi bi-inbox fs-1 d-block mb-3 text-secondary"></i>
+      <h4 class="h5 fw-semibold text-dark">Nemate unetih proizvoda u sistemu.</h4>
+      <p class="small text-muted mb-0">Dodajte nove proizvode da biste mogli da upravljate njihovim lagerom.</p>
+    </div>
+  }
+
+  <!-- Dugme za nazad -->
+  <div>
+    <button (click)="goBack()" class="btn btn-secondary px-4 py-2 rounded-3 fw-semibold shadow-sm">
+      <i class="bi bi-arrow-left me-1"></i> Nazad
+    </button>
+  </div>
+
+</div>

@@ -1,0 +1,155 @@
+<div class="container py-4">
+  
+  <!-- Naslov -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <h1 class="h3 fw-bold text-dark mb-1">
+        <i class="bi bi-box-seam-fill me-2 text-warning"></i> Arhiva proizvoda
+      </h1>
+      <p class="text-muted small mb-0">Pregledajte isporučene i primljene proizvode, sortirajte ih i ostavite recenzije ili komentare.</p>
+    </div>
+  </div>
+
+  <!-- Kontrola za sortiranje -->
+  <div class="card shadow-sm border-0 rounded-4 p-3 mb-4 bg-white">
+    <div class="row align-items-center">
+      <div class="col-md-auto">
+        <label class="form-label fw-semibold text-secondary mb-md-0 me-2">
+          <i class="bi bi-sort-down me-1"></i> Sortiraj po:
+        </label>
+      </div>
+      <div class="col-md-4">
+        <select class="form-select rounded-3 py-2" [(ngModel)]="sortBy" (change)="sortProducts()">
+          <option value="date">Datumu naručivanja (najnovije)</option>
+          <option value="name">Nazivu proizvoda</option>
+          <option value="quantity">Količini</option>
+          <option value="printer">Štampariji</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ako nema porudžbina u arhivi -->
+  @if (!archiveOrders || archiveOrders.length === 0) {
+    <div class="card shadow-sm border-0 rounded-4 p-5 text-center bg-white text-muted">
+      <i class="bi bi-archive fs-1 d-block mb-3 text-secondary"></i>
+      <h4 class="h5 fw-semibold text-dark">Nemate isporučenih ili primljenih proizvoda u arhivi.</h4>
+      <p class="small text-muted mb-0">Ovde će se prikazati istorija vaših isporučenih porudžbina.</p>
+    </div>
+  }
+
+  <!-- Lista porudžbina u arhivi -->
+  @for (order of archiveOrders; track order._id) {
+    <div class="card shadow-sm border-0 rounded-4 p-4 mb-4 bg-white">
+      
+      <div class="row mb-3">
+        <div class="col-md-8">
+          <div class="d-flex flex-wrap align-items-center gap-3 mb-2">
+            <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-semibold">
+              <i class="bi bi-receipt me-1"></i> Faktura: {{ order.invoiceId }}
+            </span>
+            <span class="text-muted small">
+              <i class="bi bi-calendar-event me-1"></i> {{ order.createdAt | date:'dd.MM.yyyy HH:mm' }}
+            </span>
+          </div>
+          <h4 class="h5 fw-bold text-dark mb-1">
+            <i class="bi bi-shop me-2 text-secondary"></i> Štamparija: <span class="text-secondary">{{ order.printerName }}</span>
+          </h4>
+        </div>
+
+        <div class="col-md-4 text-md-end mt-2 mt-md-0">
+          <!-- Status -->
+          <span class="badge px-3 py-2 rounded-pill fw-semibold" [ngClass]="order.status === 'primljeno' ? 'bg-success bg-opacity-10 text-success' : 'bg-warning bg-opacity-10 text-dark'">
+            {{ order.status | uppercase }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Dugme za označavanje kao primljeno -->
+      @if (order.status === 'isporuceno') {
+        <div class="mb-3">
+          <button (click)="markAsReceived(order._id)" class="btn btn-success btn-sm px-3 py-2 rounded-3 fw-semibold shadow-sm">
+            <i class="bi bi-check2-all me-1"></i> Označi kao „Примљено“
+          </button>
+        </div>
+      }
+
+      <hr class="text-muted opacity-25">
+
+      <!-- Stavke -->
+      <h5 class="h6 fw-bold text-dark mb-3">Stavke:</h5>
+      <div class="d-flex flex-column gap-3">
+        @for (item of order.items; track item.productId) {
+          <div class="p-3 rounded-3 bg-light border">
+            
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="fw-bold text-dark">{{ item.name }}</span>
+              <span class="text-muted small">Količina: <strong class="text-dark">{{ item.quantity }}</strong> | Ukupno: <strong class="text-success">{{ item.totalPrice }} RSD</strong></span>
+            </div>
+
+            <!-- Interakcije ako je primljeno -->
+            @if (order.status === 'primljeno') {
+              <div class="mt-3 pt-2 border-top border-2">
+                
+                <!-- Lajk / Dislajk dugmad -->
+                <div class="d-flex gap-2 mb-3">
+                  <button (click)="react(item.productId, 'like')" class="btn btn-outline-success btn-sm px-3 fw-semibold">
+                    👍 Sviđa mi se (<span class="text-dark">{{ item.likesCount || 0 }}</span>)
+                  </button>
+                  <button (click)="react(item.productId, 'dislike')" class="btn btn-outline-danger btn-sm px-3 fw-semibold">
+                    👎 Ne sviđa mi se (<span class="text-dark">{{ item.dislikesCount || 0 }}</span>)
+                  </button>
+                </div>
+
+                <!-- Forma za komentar -->
+                <div class="input-group mb-3" style="max-width: 450px;">
+                  <input 
+                    type="text" 
+                    class="form-control form-control-sm rounded-start-3" 
+                    [(ngModel)]="item.newComment" 
+                    placeholder="Ostavite komentar..." 
+                  />
+                  <button (click)="addComment(item)" class="btn btn-primary btn-sm px-3 fw-semibold rounded-end-3">
+                    Komentariši
+                  </button>
+                </div>
+
+                <!-- Lista poslednjih komentara -->
+                @if (item.comments && item.comments.length > 0) {
+                  <div class="mt-3">
+                    <span class="small fw-bold text-secondary d-block mb-2">Poslednjih 5 komentara:</span>
+                    <div class="d-flex flex-column gap-2">
+                      @for (c of item.comments.slice(-5); track c.date) {
+                        <div 
+                          class="p-2.5 rounded-3 bg-white shadow-sm"
+                          [style.border]="c.username === currentUsername ? '2px solid #ffc107' : '1px solid #dee2e6'"
+                        >
+                          <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="fw-bold small text-dark">{{ c.username }}</span>
+                            <span class="text-muted" style="font-size: 11px;">({{ c.date | date:'dd.MM.yyyy' }})</span>
+                          </div>
+                          <p class="small text-secondary mb-0">{{ c.text }}</p>
+                        </div>
+                      }
+                    </div>
+                  </div>
+                }
+
+              </div>
+            }
+
+          </div>
+        }
+      </div>
+
+    </div>
+  }
+
+  <!-- Dugme za povratak nazad -->
+  <div>
+    <button (click)="goBack()" class="btn btn-secondary px-4 py-2 rounded-3 fw-semibold shadow-sm">
+      <i class="bi bi-arrow-left me-1"></i> Nazad
+    </button>
+  </div>
+
+</div>

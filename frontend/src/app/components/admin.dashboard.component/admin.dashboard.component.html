@@ -1,0 +1,248 @@
+<div class="container py-4">
+  
+  <!-- Naslov panela -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <h1 class="h3 fw-bold text-dark">
+        <i class="bi bi-shield-fill-gear me-2 text-primary"></i> Administratorski panel
+      </h1>
+      <p class="text-muted small">Upravljanje zahtevima za registraciju, korisnicima i kategorijama proizvoda.</p>
+    </div>
+  </div>
+
+  <!-- ==================== 1. ZAHTEVI ZA REGISTRACIJU ==================== -->
+  <div class="card shadow-sm border-0 rounded-4 p-4 mb-5 bg-white">
+    <h2 class="h4 fw-bold text-dark mb-3">
+      <i class="bi bi-person-check-fill me-2 text-success"></i> Zahtevi za registraciju
+    </h2>
+
+    @if (message) {
+      <div class="alert alert-success d-flex align-items-center rounded-3 p-3 mb-3" role="alert">
+        <i class="bi bi-check-circle-fill flex-shrink-0 me-2"></i>
+        <div class="small">{{ message }}</div>
+      </div>
+    }
+
+    @if (pendingUsers.length === 0) {
+      <div class="text-center py-4 border rounded-3 bg-light text-muted">
+        <i class="bi bi-check2-all fs-2 d-block mb-2"></i>
+        Trenutno nema neregistrovanih korisnika koji čekaju odobrenje.
+      </div>
+    } @else {
+      <div class="table-responsive rounded-3 border">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th scope="col" class="py-3 px-3">Korisničko ime</th>
+              <th scope="col" class="py-3 px-3">Uloga</th>
+              <th scope="col" class="py-3 px-3">Ime i prezime / Kontakt lice</th>
+              <th scope="col" class="py-3 px-3">Email</th>
+              <th scope="col" class="py-3 px-3">Institucija</th>
+              <th scope="col" class="py-3 px-3">PIB</th>
+              <th scope="col" class="py-3 px-3 text-center">Akcije</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (u of pendingUsers; track u.username) {
+              <tr>
+                <td class="py-3 px-3 fw-semibold text-dark">{{ u.username }}</td>
+                <td class="py-3 px-3">
+                  <span class="badge bg-secondary bg-opacity-10 text-dark px-2 py-1">{{ u.role }}</span>
+                </td>
+                <td class="py-3 px-3">{{ u.name }} {{ u.surname }}</td>
+                <td class="py-3 px-3 text-muted">{{ u.email }}</td>
+                <td class="py-3 px-3">{{ u.institutionName || '-' }}</td>
+                <td class="py-3 px-3">{{ u.taxId || '-' }}</td>
+                <td class="py-3 px-3 text-center">
+                  <div class="btn-group btn-group-sm" role="group">
+                    <button (click)="approve(u.username)" class="btn btn-outline-success px-3 fw-semibold">Odobri</button>
+                    <button (click)="reject(u.username)" class="btn btn-outline-danger px-3 fw-semibold">Odbij</button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+
+  <!-- ==================== 2. UPRAVLJANJE SVIM KORISNICIMA ==================== -->
+  <div class="card shadow-sm border-0 rounded-4 p-4 mb-5 bg-white">
+    <h2 class="h4 fw-bold text-dark mb-3">
+      <i class="bi bi-people-fill me-2 text-primary"></i> Upravljanje svim korisnicima
+    </h2>
+
+    <div class="table-responsive rounded-3 border mb-4">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th scope="col" class="py-3 px-3">Korisničko ime</th>
+            <th scope="col" class="py-3 px-3">Uloga</th>
+            <th scope="col" class="py-3 px-3">Ime i prezime</th>
+            <th scope="col" class="py-3 px-3">Email</th>
+            <th scope="col" class="py-3 px-3">Status</th>
+            <th scope="col" class="py-3 px-3 text-center">Akcije</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (u of allUsers; track u.username) {
+            <tr>
+              <td class="py-3 px-3 fw-semibold text-dark">{{ u.username }}</td>
+              <td class="py-3 px-3">
+                <span class="badge bg-info bg-opacity-10 text-dark px-2 py-1">{{ u.role }}</span>
+              </td>
+              <td class="py-3 px-3">{{ u.name }} {{ u.surname }}</td>
+              <td class="py-3 px-3 text-muted">{{ u.email }}</td>
+              <td class="py-3 px-3">
+                <span class="badge" [ngClass]="u.status === 'aktivno' || u.status === 'active' ? 'bg-success bg-opacity-10 text-success' : 'bg-warning bg-opacity-10 text-dark'">
+                  {{ u.status }}
+                </span>
+              </td>
+              <td class="py-3 px-3 text-center">
+                <div class="btn-group btn-group-sm" role="group">
+                  <button (click)="editUser(u)" class="btn btn-outline-primary px-3 fw-semibold">Izmeni</button>
+                  @if (u.username !== getCurrentUsername()) {
+                    <button (click)="deleteUser(u.username)" class="btn btn-outline-danger px-3 fw-semibold">Obriši</button>
+                  }
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Forma za izmenu korisnika (prikazuje se samo kada je izabran korisnik) -->
+    @if (selectedUser) {
+      <div class="card border-primary border-opacity-50 shadow-sm rounded-4 p-4 bg-light">
+        <h3 class="h5 fw-bold text-primary mb-3">
+          <i class="bi bi-pencil-square me-1"></i> Izmena korisnika: {{ selectedUser.username }}
+        </h3>
+        
+        <form (ngSubmit)="saveUserChanges()">
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold">Ime:</label>
+              <input type="text" class="form-control rounded-3" [(ngModel)]="selectedUser.name" name="name">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold">Prezime:</label>
+              <input type="text" class="form-control rounded-3" [(ngModel)]="selectedUser.surname" name="surname">
+            </div>
+          </div>
+
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold">Email:</label>
+              <input type="text" class="form-control rounded-3" [(ngModel)]="selectedUser.email" name="email">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-semibold">Telefon:</label>
+              <input type="text" class="form-control rounded-3" [(ngModel)]="selectedUser.phone" name="phone">
+            </div>
+          </div>
+
+          @if (selectedUser.institutionName) {
+            <div class="mb-3">
+              <label class="form-label small fw-semibold">Naziv institucije:</label>
+              <input type="text" class="form-control rounded-3" [(ngModel)]="selectedUser.institutionName" name="institutionName">
+            </div>
+          }
+
+          @if (selectedUser.address) {
+            <div class="mb-3">
+              <label class="form-label small fw-semibold">Adresa:</label>
+              <input type="text" class="form-control rounded-3" [(ngModel)]="selectedUser.address" name="address">
+            </div>
+          }
+
+          @if (selectedUser.taxId) {
+            <div class="mb-3">
+              <label class="form-label small fw-semibold">PIB (Tax ID):</label>
+              <input type="text" class="form-control rounded-3" [(ngModel)]="selectedUser.taxId" name="taxId">
+            </div>
+          }
+
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary px-4 py-2 rounded-3 fw-semibold">Sačuvaj izmene</button>
+            <button type="button" (click)="selectedUser = null" class="btn btn-outline-secondary px-4 py-2 rounded-3 fw-semibold">Otkaži</button>
+          </div>
+        </form>
+      </div>
+    }
+  </div>
+
+  <!-- ==================== 3. KATEGORIJE I POTKATEGORIJE ==================== -->
+  <div class="card shadow-sm border-0 rounded-4 p-4 bg-white">
+    <h2 class="h4 fw-bold text-dark mb-3">
+      <i class="bi bi-tags-fill me-2 text-warning"></i> Upravljanje kategorijama i potkategorijama
+    </h2>
+
+    @if (categoryMessage) {
+      <div class="alert alert-success d-flex align-items-center rounded-3 p-3 mb-3" role="alert">
+        <i class="bi bi-check-circle-fill flex-shrink-0 me-2"></i>
+        <div class="small">{{ categoryMessage }}</div>
+      </div>
+    }
+
+    <div class="row g-4 mb-4">
+      <!-- Dodavanje nove kategorije -->
+      <div class="col-md-6">
+        <div class="p-4 border rounded-4 bg-light h-100">
+          <h3 class="h6 fw-bold text-dark mb-3">Dodaj novu kategoriju</h3>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control rounded-start-3" [(ngModel)]="newCategoryName" placeholder="Naziv kategorije" name="newCategoryName">
+            <button (click)="addNewCategory()" class="btn btn-primary px-4 rounded-end-3 fw-semibold">Dodaj</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dodavanje nove potkategorije -->
+      <div class="col-md-6">
+        <div class="p-4 border rounded-4 bg-light h-100">
+          <h3 class="h6 fw-bold text-dark mb-3">Dodaj potkategoriju u postojeću kategoriju</h3>
+          <div class="mb-3">
+            <select class="form-select rounded-3 mb-2" [(ngModel)]="selectedCategoryForSub" name="selectedCategoryForSub">
+              <option value="" disabled selected>Izaberite kategoriju...</option>
+              @for (cat of categories; track cat.name) {
+                <option [value]="cat.name">{{ cat.name }}</option>
+              }
+            </select>
+          </div>
+          <div class="input-group">
+            <input type="text" class="form-control rounded-start-3" [(ngModel)]="newSubcategoryName" placeholder="Naziv potkategorije" name="newSubcategoryName">
+            <button (click)="addNewSubcategory()" class="btn btn-primary px-4 rounded-end-3 fw-semibold">Dodaj potkategoriju</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Prikaz postojećih kategorija -->
+    <h3 class="h6 fw-bold text-dark mb-3">Postojeće kategorije i potkategorije</h3>
+    <div class="row g-3">
+      @for (cat of categories; track cat.name) {
+        <div class="col-md-4">
+          <div class="card border shadow-sm rounded-3 p-3 h-100 bg-light">
+            <h5 class="fw-bold text-primary mb-2">
+              <i class="bi bi-folder-fill me-1"></i> {{ cat.name }}
+            </h5>
+            @if (cat.subcategories && cat.subcategories.length > 0) {
+              <ul class="list-unstyled ps-3 mb-0 border-start border-primary border-2">
+                @for (sub of cat.subcategories; track sub.name) {
+                  <li class="text-muted small py-1">
+                    <i class="bi bi-file-earmark-text me-1"></i> {{ sub.name }}
+                  </li>
+                }
+              </ul>
+            } @else {
+              <p class="text-muted small italic mb-0">Nema definisanih potkategorija.</p>
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,110 @@
+<div class="container py-4" style="max-width: 900px;">
+  
+  <!-- Naslov -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <h1 class="h3 fw-bold text-dark mb-1">
+        <i class="bi bi-hammer me-2 text-purple" style="color: #6f42c1;"></i> Otvorene javne nabavke — Licitacija
+      </h1>
+      <p class="text-muted small mb-0">Pregledajte aktivne javne nabavke, analizirajte tražene proizvode i pošaljite svoju ponudu.</p>
+    </div>
+  </div>
+
+  <!-- Poruke o uspehu ili grešci -->
+  @if (successMessage) {
+    <div class="alert alert-success py-2 px-3 rounded-3 small fw-semibold d-flex align-items-center shadow-sm mb-4">
+      <i class="bi bi-check-circle-fill me-2 fs-5"></i> {{ successMessage }}
+    </div>
+  }
+  @if (errorMessage) {
+    <div class="alert alert-danger py-2 px-3 rounded-3 small fw-semibold d-flex align-items-center shadow-sm mb-4">
+      <i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i> {{ errorMessage }}
+    </div>
+  }
+
+  <!-- Lista otvorenih nabavki -->
+  @if (procurements && procurements.length > 0) {
+    <div class="d-flex flex-column gap-4 mb-4">
+      @for (p of procurements; track p._id) {
+        <div class="card shadow-sm border-0 rounded-4 p-4 bg-white">
+          
+          <!-- Zaglavlje kartice nabavke -->
+          <div class="row g-3 mb-3 pb-3 border-bottom text-secondary small">
+            <div class="col-md-3">
+              <span class="d-block text-muted">ID nabavke:</span>
+              <strong class="text-dark font-monospace">{{ p._id }}</strong>
+            </div>
+            <div class="col-md-3">
+              <span class="d-block text-muted">Klijent:</span>
+              <strong class="text-dark"><i class="bi bi-person-circle me-1"></i> {{ p.clientUsername }}</strong>
+            </div>
+            <div class="col-md-3">
+              <span class="d-block text-muted">Procena budžeta:</span>
+              <strong class="text-success">{{ p.totalBudgetEstimate }} RSD</strong>
+            </div>
+            <div class="col-md-3">
+              <span class="d-block text-muted">Vreme isteka:</span>
+              <strong class="text-danger"><i class="bi bi-clock me-1"></i> {{ p.endTime | date:'dd.MM.yyyy. HH:mm:ss' }}</strong>
+            </div>
+          </div>
+
+          <!-- Traženi proizvodi -->
+          <div class="mb-3">
+            <h4 class="h6 fw-bold text-dark mb-2">
+              <i class="bi bi-list-check me-1 text-primary"></i> Traženi proizvodi i količine:
+            </h4>
+            <ul class="list-group list-group-flush shadow-sm rounded-3 overflow-hidden border">
+              @for (item of p.items; track item.name) {
+                <li class="list-group-item d-flex justify-content-between align-items-center py-2 px-3 small bg-light">
+                  <span><strong class="text-dark">{{ item.name }}</strong></span>
+                  <div class="d-flex gap-3">
+                    <span class="badge bg-primary bg-opacity-10 text-primary">Količina: {{ item.quantity }}</span>
+                    <span class="badge bg-success bg-opacity-10 text-success">Procenjena cena: {{ item.totalPrice }} RSD</span>
+                  </div>
+                </li>
+              }
+            </ul>
+          </div>
+
+          <!-- Forma za slanje ponude -->
+          <div class="pt-3 border-top border-dashed d-flex flex-wrap align-items-center justify-content-between gap-3">
+            <label [for]="'offerPrice-' + p._id" class="form-label fw-semibold text-secondary mb-0">
+              Vaša ukupna ponuda (RSD):
+            </label>
+            <div class="d-flex align-items-center gap-2">
+              <input 
+                type="number" 
+                [id]="'offerPrice-' + p._id" 
+                [(ngModel)]="offerPrices[p._id]" 
+                placeholder="Unesite cenu" 
+                class="form-control form-control-sm rounded-3 shadow-sm" 
+                style="width: 160px;"
+              />
+              <button 
+                (click)="sendBid(p._id)" 
+                class="btn btn-primary btn-sm px-4 py-2 rounded-3 fw-bold shadow-sm"
+              >
+                <i class="bi bi-send-fill me-1"></i> Pošalji ponudu
+              </button>
+            </div>
+          </div>
+
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="card shadow-sm border-0 rounded-4 p-5 text-center bg-white text-muted mb-4">
+      <i class="bi bi-inbox fs-1 d-block mb-3 text-secondary"></i>
+      <h4 class="h5 fw-semibold text-dark">Trenutno nema aktivnih javnih nabavki za licitaciju.</h4>
+      <p class="small text-muted mb-0">Proverite ponovo kasnije za nove zahteve klijenata.</p>
+    </div>
+  }
+
+  <!-- Dugme za nazad -->
+  <div>
+    <button (click)="goBack()" class="btn btn-secondary px-4 py-2 rounded-3 fw-semibold shadow-sm">
+      <i class="bi bi-arrow-left me-1"></i> Nazad
+    </button>
+  </div>
+
+</div>

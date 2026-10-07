@@ -1,0 +1,19 @@
+/* Efekat prelaza miša preko kartica top proizvoda */
+.product-card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1) !important;
+}
+
+/* Stilizovanje zaglavlja tabele koje se može sortirati */
+.sortable-header {
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.sortable-header:hover {
+    background-color: #e9ecef !important;
+}

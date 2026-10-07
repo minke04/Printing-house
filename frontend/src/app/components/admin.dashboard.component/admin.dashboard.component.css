@@ -1,0 +1,25 @@
+/* Blago tonirana pozadina za ceo administrativni panel */
+:host {
+    display: block;
+    min-height: calc(100vh - 140px);
+    background: #f8f9fa;
+}
+
+/* Efekat za kartice i tabele */
+.card {
+    transition: all 0.2s ease-in-out;
+}
+
+.table th {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #495057;
+}
+
+.table td {
+    font-size: 0.9rem;
+}
+
+.btn {
+    transition: all 0.2s ease-in-out;
+}

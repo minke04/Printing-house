@@ -1,0 +1,103 @@
+<div class="container py-4">
+  
+  <!-- Naslov -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <h1 class="h3 fw-bold text-dark mb-1">
+        <i class="bi bi-file-earmark-text-fill me-2 text-primary"></i> Moje javne nabavke
+      </h1>
+      <p class="text-muted small mb-0">Pregledajte kreirane javne nabavke, budžete, statuse i pobedničke štamparije.</p>
+    </div>
+  </div>
+
+  <!-- Ako nema nabavki -->
+  @if (!procurements || procurements.length === 0) {
+    <div class="card shadow-sm border-0 rounded-4 p-5 text-center bg-white text-muted mb-4">
+      <i class="bi bi-inbox fs-1 d-block mb-3 text-secondary"></i>
+      <h4 class="h5 fw-semibold text-dark">Nemate aktivnih javnih nabavki.</h4>
+      <p class="small text-muted mb-0">Ovde će se prikazati lista vaših javnih nabavki kada ih kreirate.</p>
+    </div>
+  }
+
+  <!-- Lista nabavki -->
+  @for (p of procurements; track p._id) {
+    <div class="card shadow-sm border-0 rounded-4 p-4 mb-4 bg-white">
+      
+      <div class="row g-4 align-items-center">
+        
+        <div class="col-lg-8">
+          <div class="d-flex align-items-center mb-3">
+            <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-semibold me-3">
+              <i class="bi bi-hash me-1"></i> ID: {{ p._id }}
+            </span>
+            
+            <!-- Status bedž -->
+            <span>
+              @switch (p.status) {
+                @case ('zavrseno') {
+                  <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill fw-semibold">
+                    <i class="bi bi-check-circle-fill me-1"></i> {{ p.status }}
+                  </span>
+                }
+                @case ('otvoreno') {
+                  <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-semibold">
+                    <i class="bi bi-clock-fill me-1"></i> {{ p.status }}
+                  </span>
+                }
+                @default {
+                  <span class="badge bg-danger bg-opacity-10 text-danger px-3 py-2 rounded-pill fw-semibold">
+                    <i class="bi bi-x-circle-fill me-1"></i> {{ p.status }}
+                  </span>
+                }
+              }
+            </span>
+          </div>
+
+          <!-- Budžet i Pobednička štamparija -->
+          <div class="row g-3 mb-3">
+            <div class="col-sm-6">
+              <div class="p-3 border rounded-3 bg-light">
+                <span class="text-muted small d-block">Ukupna procena budžeta:</span>
+                <span class="h6 fw-bold text-dark mb-0">{{ p.totalBudgetEstimate }} RSD</span>
+              </div>
+            </div>
+            @if (p.winningPrinterName) {
+              <div class="col-sm-6">
+                <div class="p-3 border rounded-3 bg-light">
+                  <span class="text-muted small d-block">Pobednička štamparija:</span>
+                  <span class="h6 fw-bold text-success mb-0"><i class="bi bi-shop me-1"></i> {{ p.winningPrinterName }}</span>
+                </div>
+              </div>
+            }
+          </div>
+
+        </div>
+
+        <!-- Stavke nabavke -->
+        <div class="col-lg-4 border-start-lg ps-lg-4">
+          <h4 class="h6 fw-bold text-dark mb-3">
+            <i class="bi bi-list-check me-1 text-primary"></i> Stavke:
+          </h4>
+          <ul class="list-unstyled mb-0 d-flex flex-column gap-2">
+            @for (item of p.items; track item.name) {
+              <li class="p-2.5 rounded-3 bg-light border small">
+                <div class="fw-semibold text-dark">{{ item.name }}</div>
+                <div class="text-muted">Količina: {{ item.quantity }} | <span class="text-success fw-semibold">{{ item.totalPrice }} RSD</span></div>
+              </li>
+            }
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+  }
+
+  <!-- Dugme za povratak nazad -->
+  <div>
+    <button (click)="goBack()" class="btn btn-secondary px-4 py-2 rounded-3 fw-semibold shadow-sm">
+      <i class="bi bi-arrow-left me-1"></i> Nazad
+    </button>
+  </div>
+
+</div>

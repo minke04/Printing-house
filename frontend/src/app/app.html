@@ -1,0 +1,72 @@
+<!-- Glavni omotač sa fleksibilnim rasporedom i čistom belom pozadinom -->
+<div class="d-flex flex-column min-vh-100 bg-white">
+
+  <!-- ==================== HEADER / NAVIGACIONI MENI ==================== -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container">
+      
+      <!-- Brend / Naziv sistema -->
+      <a class="navbar-brand fw-bold d-flex align-items-center" routerLink="/">
+        <i class="bi bi-printer-fill me-2"></i> Štamparija Sistem
+      </a>
+
+      <!-- Dugme za mobilni meni (Responsive toggler) -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Sadržaj menija -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        
+        <!-- Levi deo menija: Osnovni linkovi -->
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          @if (!isLoggedIn()) {
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Početna</a>
+            </li>
+          } @else {
+            <!-- Ukoliko je korisnik ulogovan, omogućavamo brzi povratak na njegov početni ekran -->
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">Početni ekran</a>
+            </li>
+          }
+        </ul>
+
+        <!-- Desni deo menija: Autentifikacija (Login, Register ili Logout) -->
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          @if (isLoggedIn()) {
+            <li class="nav-item">
+              <button (click)="logout()" class="btn btn-outline-light btn-sm px-3 rounded-pill">
+                <i class="bi bi-box-arrow-right me-1"></i> Izloguj se
+              </button>
+            </li>
+          } @else {
+            <li class="nav-item me-2">
+              <a class="nav-link text-white" routerLink="/login" routerLinkActive="active">Prijava</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-primary btn-sm px-3 rounded-pill text-white" routerLink="/register" routerLinkActive="active">Registracija</a>
+            </li>
+          }
+        </ul>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==================== GLAVNI SADRŽAJ (ROUTER OUTLET) ==================== -->
+  <main class="flex-fill container my-4">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="bg-dark text-white text-center py-3 mt-auto border-top border-secondary">
+    <div class="container">
+      <p class="mb-0 small text-white-50">
+        &copy; 2026 Printing House Web Sistem &bull; Elektrotehnički fakultet u Beogradu &bull; Sva prava zadržana.
+      </p>
+    </div>
+  </footer>
+
+</div>
