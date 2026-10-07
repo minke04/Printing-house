@@ -1,0 +1,36 @@
+[
+  {
+    "name": "Štampa malih formata",
+    "subcategories": [
+      { "name": "Olovke" },
+      { "name": "Vizitkarte" },
+      { "name": "Flajeri" },
+      { "name": "Zahvalnice" },
+      { "name": "Pozivnice" },
+      { "name": "Fasikle" },
+      { "name": "Nalepnice male" },
+      { "name": "Katalozi i brošure" }
+    ]
+  },
+  {
+    "name": "Štampa velikih formata",
+    "subcategories": [
+      { "name": "Posteri" },
+      { "name": "Rollups" },
+      { "name": "Fototapete" },
+      { "name": "Banneri (reklamna platna)" },
+      { "name": "Mesh platna" },
+      { "name": "Foil i nalepnice" }
+    ]
+  },
+  {
+    "name": "Kreativne štampe",
+    "subcategories": [
+      { "name": "Šolje" },
+      { "name": "Štampa na majicama" },
+      { "name": "Štampa na duksevima" },
+      { "name": "Štampa na cegerima" },
+      { "name": "Suveniri i pokloni" }
+    ]
+  }
+]

@@ -1,0 +1,43 @@
+[
+  {
+    "clientUsername": "firma_kg",
+    "status": "otvoreno",
+    "totalBudgetEstimate": 14500,
+    "endTime": "2026-09-13T12:00:00.000Z",
+    "items": [
+      { "productId": "PR-001", "name": "Pamucna Polo Majica", "quantity": 10, "totalPrice": 12000 },
+      { "productId": "PR-008", "name": "PVC Baner platno sa ringlicama", "quantity": 1, "totalPrice": 2500 }
+    ],
+    "bids": [
+      { "printerId": "stampar1", "printerName": "Copy Studio Kumanovska", "totalOfferPrice": 13800, "timestamp": "2026-09-13T01:00:00.000Z" }
+    ],
+    "winningPrinterId": null,
+    "winningPrinterName": null
+  },
+  {
+    "clientUsername": "firma_kg",
+    "status": "zavrseno",
+    "totalBudgetEstimate": 24000,
+    "endTime": "2026-09-12T10:00:00.000Z",
+    "items": [
+      { "productId": "PR-005", "name": "Flajeri A4 kolor obostrano", "quantity": 3, "totalPrice": 24000 }
+    ],
+    "bids": [
+      { "printerId": "stampar2", "printerName": "Print Master Plus", "totalOfferPrice": 22500, "timestamp": "2026-09-12T09:30:00.000Z" }
+    ],
+    "winningPrinterId": "stampar2",
+    "winningPrinterName": "Print Master Plus"
+  },
+  {
+    "clientUsername": "firma_skola",
+    "status": "isteklo_bez_ponuda",
+    "totalBudgetEstimate": 5000,
+    "endTime": "2026-09-11T15:00:00.000Z",
+    "items": [
+      { "productId": "PR-004", "name": "Vizitkarte mat 300g", "quantity": 3, "totalPrice": 4500 }
+    ],
+    "bids": [],
+    "winningPrinterId": null,
+    "winningPrinterName": null
+  }
+]

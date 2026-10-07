@@ -1,0 +1,258 @@
+[
+  {
+    "invoiceId": "FAK-2026-001",
+    "clientUsername": "mika_mikic",
+    "printerId": "stampar1",
+    "printerName": "Copy Studio Kumanovska",
+    "city": "Beograd",
+    "items": [
+      {
+        "productId": "PR-001",
+        "name": "Pamucna Polo Majica",
+        "quantity": 2,
+        "printType": "Direktna štampa na tekstil (DTG)",
+        "unitPrice": 1200,
+        "totalPrice": 2750
+      }
+    ],
+    "totalAmount": 2750,
+    "status": "primljeno",
+    "createdAt": "2026-07-10T10:00:00.000Z"
+  },
+  {
+    "invoiceId": "FAK-2026-002",
+    "clientUsername": "mika_mikic",
+    "printerId": "stampar1",
+    "printerName": "Copy Studio Kumanovska",
+    "city": "Beograd",
+    "items": [
+      {
+        "productId": "PR-002",
+        "name": "Keramička šolja 330ml",
+        "quantity": 5,
+        "printType": "Sublimaciona štampa",
+        "unitPrice": 320,
+        "totalPrice": 2350
+      }
+    ],
+    "totalAmount": 2350,
+    "status": "isporuceno",
+    "createdAt": "2026-07-08T12:30:00.000Z"
+  },
+  {
+    "invoiceId": "FAK-2026-003",
+    "clientUsername": "pera_peric",
+    "printerId": "stampar2",
+    "printerName": "Print Master Plus",
+    "city": "Beograd",
+    "items": [
+      {
+        "productId": "PR-004",
+        "name": "Vizitkarte mat 300g",
+        "quantity": 1,
+        "printType": "Digitalna štampa",
+        "unitPrice": 1500,
+        "totalPrice": 1500
+      }
+    ],
+    "totalAmount": 1500,
+    "status": "naruceno",
+    "createdAt": "2026-07-01T09:15:00.000Z"
+  },
+  {
+    "invoiceId": "FAK-2026-004",
+    "clientUsername": "mika_mikic",
+    "printerId": "stampar2",
+    "printerName": "Print Master Plus",
+    "city": "Beograd",
+    "items": [
+      {
+        "productId": "PR-003",
+        "name": "Promotivni Roll-up Baner 85x200cm",
+        "quantity": 1,
+        "printType": "Eko-solventna štampa visoke rezolucije",
+        "unitPrice": 4500,
+        "totalPrice": 5300
+      },
+      {
+        "productId": "PR-008",
+        "name": "PVC Baner platno sa ringlicama",
+        "quantity": 2,
+        "printType": "Veliki solventni print",
+        "unitPrice": 2200,
+        "totalPrice": 5000
+      }
+    ],
+    "totalAmount": 10300,
+    "status": "u stampi",
+    "createdAt": "2026-09-05T14:20:00.000Z"
+  },
+  {
+    "invoiceId": "FAK-2026-005",
+    "clientUsername": "mika_mikic",
+    "printerId": "stampar3",
+    "printerName": "Mega Print DOO",
+    "city": "Beograd",
+    "items": [
+      {
+        "productId": "PR-009",
+        "name": "Mesh perforirano platno za fasade",
+        "quantity": 3,
+        "printType": "UV štampa velikog formata",
+        "unitPrice": 2800,
+        "totalPrice": 9600
+      }
+    ],
+    "totalAmount": 9600,
+    "status": "placeno",
+    "createdAt": "2026-09-02T11:00:00.000Z"
+  },
+  {
+    "invoiceId": "FAK-2026-006",
+    "clientUsername": "pera_peric",
+    "printerId": "stampar1",
+    "printerName": "Copy Studio Kumanovska",
+    "city": "Beograd",
+    "items": [
+      {
+        "productId": "PR-010",
+        "name": "Aluminijumska hemijska olovka sa gravurom",
+        "quantity": 25,
+        "printType": "Laserska gravura",
+        "unitPrice": 180,
+        "totalPrice": 5750
+      }
+    ],
+    "totalAmount": 5750,
+    "status": "primljeno",
+    "createdAt": "2026-08-20T16:45:00.000Z"
+  },
+  {
+    "invoiceId": "FAK-2026-007",
+    "clientUsername": "zika_zikic",
+    "printerId": "stampar2",
+    "printerName": "Print Master Plus",
+    "city": "Beograd",
+    "items": [
+      {
+        "productId": "PR-003",
+        "name": "Promotivni Roll-up Baner 85x200cm",
+        "quantity": 2,
+        "printType": "Eko-solventna štampa visoke rezolucije",
+        "unitPrice": 4500,
+        "totalPrice": 10600
+      }
+    ],
+    "totalAmount": 10600,
+    "status": "naruceno",
+    "createdAt": "2026-09-07T08:10:00.000Z"
+  },
+  {
+    "invoiceId": "FAK-2026-008",
+    "clientUsername": "zika_zikic",
+    "printerId": "stampar1",
+    "printerName": "Copy Studio Kumanovska",
+    "city": "Beograd",
+    "items": [
+      {
+        "productId": "PR-002",
+        "name": "Keramička šolja 330ml",
+        "quantity": 4,
+        "printType": "Sublimaciona štampa",
+        "unitPrice": 320,
+        "totalPrice": 1880
+      }
+    ],
+    "totalAmount": 1880,
+    "status": "u stampi",
+    "createdAt": "2026-09-03T10:00:00.000Z"
+  },
+  {
+    "invoiceId": "FAK-2026-009",
+    "clientUsername": "firma_skola",
+    "printerId": "stampar2",
+    "printerName": "Print Master Plus",
+    "city": "Beograd",
+    "items": [
+      {
+        "productId": "PR-004",
+        "name": "Vizitkarte mat 300g",
+        "quantity": 5,
+        "printType": "Digitalna štampa",
+        "unitPrice": 1500,
+        "totalPrice": 7500
+      }
+    ],
+    "totalAmount": 7500,
+    "status": "isporuceno",
+    "createdAt": "2026-09-06T11:20:00.000Z"
+  },
+  {
+    "invoiceId": "FAK-2026-010",
+    "clientUsername": "firma_kg",
+    "printerId": "stampar1",
+    "printerName": "Copy Studio Kumanovska",
+    "city": "Beograd",
+    "items": [
+      {
+        "productId": "PR-001",
+        "name": "Pamucna Polo Majica",
+        "quantity": 15,
+        "printType": "Direktna štampa na tekstil (DTG)",
+        "unitPrice": 1200,
+        "totalPrice": 23250
+      },
+      {
+        "productId": "PR-010",
+        "name": "Aluminijumska hemijska olovka sa gravurom",
+        "quantity": 100,
+        "printType": "Laserska gravura",
+        "unitPrice": 180,
+        "totalPrice": 23000
+      }
+    ],
+    "totalAmount": 46250,
+    "status": "u stampi",
+    "createdAt": "2026-08-25T09:00:00.000Z"
+  },
+  {
+    "invoiceId": "FAK-2026-011",
+    "clientUsername": "firma_kg",
+    "printerId": "stampar2",
+    "printerName": "Print Master Plus",
+    "city": "Beograd",
+    "items": [
+      {
+        "productId": "PR-003",
+        "name": "Promotivni Roll-up Baner 85x200cm",
+        "quantity": 3,
+        "printType": "Eko-solventna štampa visoke rezolucije",
+        "unitPrice": 4500,
+        "totalPrice": 13500
+      }
+    ],
+    "totalAmount": 13500,
+    "status": "primljeno",
+    "createdAt": "2026-08-15T14:00:00.000Z"
+  },
+  {
+    "invoiceId": "FAK-2026-012",
+    "clientUsername": "firma_kg",
+    "printerId": "stampar3",
+    "printerName": "Mega Print DOO",
+    "city": "Beograd",
+    "items": [
+      {
+        "productId": "PR-005",
+        "name": "Flajeri A4 kolor obostrano",
+        "quantity": 10,
+        "printType": "Offset štampa",
+        "unitPrice": 8000,
+        "totalPrice": 82000
+      }
+    ],
+    "totalAmount": 82000,
+    "status": "isporuceno",
+    "createdAt": "2026-09-01T11:30:00.000Z"
+  }
+]

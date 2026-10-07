@@ -1,0 +1,162 @@
+[
+  {
+    "printerId": "stampar3",
+    "printerName": "Mega Print DOO",
+    "code": "PR-012",
+    "name": "Flajeri A5 kolor obostrano",
+    "description": "Kvalitetni promotivni flajeri formata A5 štampani obostrano u punom koloru.",
+    "category": "Štampa malih formata",
+    "subcategory": "Flajeri",
+    "unitPrice": 4500,
+    "stockQuantity": 250,
+    "availableColors": ["Bela"],
+    "imageUrl": "",
+    "additionalImages": [],
+    "printServices": [
+      {
+        "serviceId": "USL-12",
+        "printType": "Digitalna štampa",
+        "additionalPricePerPiece": 150,
+        "maxWidthMm": 148,
+        "maxHeightMm": 210
+      }
+    ],
+    "likesCount": 22,
+    "dislikesCount": 1,
+    "comments": [
+      {
+        "username": "firma_kg",
+        "date": "2026-09-15T10:30:00.000Z",
+        "text": "Flajeri izgledaju veoma kvalitetno."
+      }
+    ]
+  },
+  {
+    "printerId": "stampar1",
+    "printerName": "Copy Studio Kumanovska",
+    "code": "PR-013",
+    "name": "Promo majica sa kratkim rukavima",
+    "description": "Pamučna majica prijatna za nošenje, namenjena za štampu promotivnih i poslovnih motiva.",
+    "category": "Kreativne štampe",
+    "subcategory": "Štampa na majicama",
+    "unitPrice": 1000,
+    "stockQuantity": 200,
+    "availableColors": ["Bela", "Crna", "Siva"],
+    "imageUrl": "promo_majica_kratki_rukavi.jpg",
+    "additionalImages": [],
+    "printServices": [
+      {
+        "serviceId": "USL-13",
+        "printType": "Direktna štampa na tekstil (DTG)",
+        "additionalPricePerPiece": 300,
+        "maxWidthMm": 280,
+        "maxHeightMm": 380
+      }
+    ],
+    "likesCount": 35,
+    "dislikesCount": 2,
+    "comments": [
+      {
+        "username": "pera_peric",
+        "date": "2026-09-16T13:20:00.000Z",
+        "text": "Majica je veoma prijatna i štampa izgleda odlično."
+      }
+    ]
+  },
+  {
+    "printerId": "stampar2",
+    "printerName": "Print Master Plus",
+    "code": "PR-014",
+    "name": "Reklamni PVC baner 100x200cm",
+    "description": "Izdržljiv PVC baner za spoljašnju i unutrašnju upotrebu sa ojačanim ivicama.",
+    "category": "Štampa velikih formata",
+    "subcategory": "Banneri (reklamna platna)",
+    "unitPrice": 2500,
+    "stockQuantity": 70,
+    "availableColors": ["Bela"],
+    "imageUrl": "",
+    "additionalImages": [],
+    "printServices": [
+      {
+        "serviceId": "USL-14",
+        "printType": "Veliki solventni print",
+        "additionalPricePerPiece": 350,
+        "maxWidthMm": 1000,
+        "maxHeightMm": 2000
+      }
+    ],
+    "likesCount": 31,
+    "dislikesCount": 1,
+    "comments": [
+      {
+        "username": "firma_nova",
+        "date": "2026-09-17T09:45:00.000Z",
+        "text": "Baner je stigao brzo i štampa je veoma jasna."
+      }
+    ]
+  },
+  {
+    "printerId": "stampar1",
+    "printerName": "Copy Studio Kumanovska",
+    "code": "PR-015",
+    "name": "Metalna hemijska olovka sa gravurom",
+    "description": "Kvalitetna metalna hemijska olovka elegantnog dizajna, pogodna za poslovne poklone i promociju.",
+    "category": "Štampa malih formata",
+    "subcategory": "Olovke",
+    "unitPrice": 220,
+    "stockQuantity": 800,
+    "availableColors": ["Crna", "Srebrna", "Plava"],
+    "imageUrl": "hemijska_olovka_gravura.jpg",
+    "additionalImages": [],
+    "printServices": [
+      {
+        "serviceId": "USL-15",
+        "printType": "Laserska gravura",
+        "additionalPricePerPiece": 60,
+        "maxWidthMm": 55,
+        "maxHeightMm": 7
+      }
+    ],
+    "likesCount": 47,
+    "dislikesCount": 2,
+    "comments": [
+      {
+        "username": "mika_mikic",
+        "date": "2026-09-14T16:10:00.000Z",
+        "text": "Olovke izgledaju elegantno i gravura je precizna."
+      }
+    ]
+  },
+  {
+    "printerId": "stampar3",
+    "printerName": "Mega Print DOO",
+    "code": "PR-016",
+    "name": "Brošura sa mekim povezom",
+    "description": "Kvalitetna brošura u punom koloru sa mekim povezom, pogodna za prezentaciju proizvoda i usluga.",
+    "category": "Štampa malih formata",
+    "subcategory": "Katalozi i brošure",
+    "unitPrice": 600,
+    "stockQuantity": 250,
+    "availableColors": ["Bela"],
+    "imageUrl": "",
+    "additionalImages": [],
+    "printServices": [
+      {
+        "serviceId": "USL-16",
+        "printType": "Digitalna štampa",
+        "additionalPricePerPiece": 100,
+        "maxWidthMm": 210,
+        "maxHeightMm": 297
+      }
+    ],
+    "likesCount": 26,
+    "dislikesCount": 1,
+    "comments": [
+      {
+        "username": "firma_skola",
+        "date": "2026-09-13T11:25:00.000Z",
+        "text": "Brošure su veoma lepo urađene i profesionalnog izgleda."
+      }
+    ]
+  }
+]

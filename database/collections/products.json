@@ -1,0 +1,261 @@
+[
+  {
+    "printerId": "stampar1",
+    "printerName": "Copy Studio Kumanovska",
+    "code": "PR-001",
+    "name": "Pamucna Polo Majica",
+    "description": "Kvalitetna pamučna polo majica 180g/m2, pogodna za brendiranje i svakodnevno nošenje.",
+    "category": "Kreativne štampe",
+    "subcategory": "Štampa na majicama",
+    "unitPrice": 1200,
+    "stockQuantity": 150,
+    "availableColors": ["Bela", "Crna", "Tamno plava"],
+    "imageUrl": "polo_majica.jpg",
+    "additionalImages": [],
+    "printServices": [
+      {
+        "serviceId": "USL-01",
+        "printType": "Direktna štampa na tekstil (DTG)",
+        "additionalPricePerPiece": 350,
+        "maxWidthMm": 300,
+        "maxHeightMm": 400
+      }
+    ],
+    "likesCount": 25,
+    "dislikesCount": 2,
+    "comments": [
+      { "username": "pera_peric", "date": "2026-09-10T10:00:00.000Z", "text": "Odličan kvalitet materijala i štampe." },
+      { "username": "firma_kg", "date": "2026-09-12T14:30:00.000Z", "text": "Prezadovoljni smo saradnjom i brzinom isporuke." }
+    ]
+  },
+  {
+    "printerId": "stampar1",
+    "printerName": "Copy Studio Kumanovska",
+    "code": "PR-002",
+    "name": "Keramička šolja 330ml",
+    "description": "Bela keramička šolja visokog sjaja idealna za sublimaciju i poklone.",
+    "category": "Kreativne štampe",
+    "subcategory": "Šolje",
+    "unitPrice": 320,
+    "stockQuantity": 500,
+    "availableColors": ["Bela"],
+    "imageUrl": "keramicka_solja.jpg",
+    "additionalImages": [],
+    "printServices": [
+      {
+        "serviceId": "USL-03",
+        "printType": "Sublimaciona štampa",
+        "additionalPricePerPiece": 150,
+        "maxWidthMm": 200,
+        "maxHeightMm": 85
+      }
+    ],
+    "likesCount": 42,
+    "dislikesCount": 1,
+    "comments": [
+      { "username": "mika_mikic", "date": "2026-09-11T09:15:00.000Z", "text": "Šolje su stigle čitave i lepo upakovane." }
+    ]
+  },
+  {
+    "printerId": "stampar2",
+    "printerName": "Print Master Plus",
+    "code": "PR-003",
+    "name": "Promotivni Roll-up Baner 85x200cm",
+    "description": "Lagan aluminijumski mehanizam sa torbom i vrhunskom štampom na baner platnu.",
+    "category": "Štampa velikih formata",
+    "subcategory": "Rollups",
+    "unitPrice": 4500,
+    "stockQuantity": 20,
+    "availableColors": ["Siva", "Crna"],
+    "imageUrl": "roll_up_baner.jpg",
+    "additionalImages": [],
+    "printServices": [
+      {
+        "serviceId": "USL-04",
+        "printType": "Eko-solventna štampa visoke rezolucije",
+        "additionalPricePerPiece": 800,
+        "maxWidthMm": 850,
+        "maxHeightMm": 2000
+      }
+    ],
+    "likesCount": 18,
+    "dislikesCount": 0,
+    "comments": []
+  },
+  {
+    "printerId": "stampar2",
+    "printerName": "Print Master Plus",
+    "code": "PR-004",
+    "name": "Vizitkarte mat 300g",
+    "description": "Standardne vizitkarte štampane na kvalitetnom 300g kunstdruk papiru sa mat plastifikacijom.",
+    "category": "Štampa malih formata",
+    "subcategory": "Vizitkarte",
+    "unitPrice": 1500,
+    "stockQuantity": 1000,
+    "availableColors": ["Bela"],
+    "imageUrl": "vizitkarte.jpg",
+    "additionalImages": [],
+    "printServices": [
+      {
+        "serviceId": "USL-05",
+        "printType": "Digitalna štampa",
+        "additionalPricePerPiece": 0,
+        "maxWidthMm": 90,
+        "maxHeightMm": 50
+      }
+    ],
+    "likesCount": 55,
+    "dislikesCount": 3,
+    "comments": [
+      { "username": "firma_kg", "date": "2026-09-08T11:20:00.000Z", "text": "Vrlo profesionalna izrada vizitkarti." }
+    ]
+  },
+  {
+    "printerId": "stampar3",
+    "printerName": "Mega Print DOO",
+    "code": "PR-005",
+    "name": "Flajeri A4 kolor obostrano",
+    "description": "Sjajni flajeri formata A4 štampani u punom koloru visokog kvaliteta.",
+    "category": "Štampa malih formata",
+    "subcategory": "Flajeri",
+    "unitPrice": 8000,
+    "stockQuantity": 150,
+    "availableColors": ["Bela"],
+    "imageUrl": "flajeriA4.jpg",
+    "additionalImages": [],
+    "printServices": [
+      {
+        "serviceId": "USL-06",
+        "printType": "Offset štampa",
+        "additionalPricePerPiece": 200,
+        "maxWidthMm": 210,
+        "maxHeightMm": 297
+      }
+    ],
+    "likesCount": 5,
+    "dislikesCount": 4,
+    "comments": []
+  },
+  {
+    "printerId": "stampar3",
+    "printerName": "Mega Print DOO",
+    "code": "PR-006",
+    "name": "Katalog sa mekim povezom",
+    "description": "Korporativni katalog u punom koloru sa klamovanim povezom i sjajnim koricama.",
+    "category": "Štampa malih formata",
+    "subcategory": "Katalozi i brošure",
+    "unitPrice": 350,
+    "stockQuantity": 300,
+    "availableColors": ["Bela"],
+    "imageUrl": "katalog_mek_povez.jpg",
+    "additionalImages": [],
+    "printServices": [],
+    "likesCount": 30,
+    "dislikesCount": 1,
+    "comments": []
+  },
+  {
+    "printerId": "stampar1",
+    "printerName": "Copy Studio Kumanovska",
+    "code": "PR-007",
+    "name": "Luksuzne kaširane vizitkarte",
+    "description": "Deblje vizitkarte izvedene kaširanjem višeslojnih papira sa zlatotiskom.",
+    "category": "Štampa malih formata",
+    "subcategory": "Vizitkarte",
+    "unitPrice": 3500,
+    "stockQuantity": 400,
+    "availableColors": ["Bela", "Crna"],
+    "imageUrl": "luksuzne_vizitkarte.jpg",
+    "additionalImages": [],
+    "printServices": [
+      {
+        "serviceId": "USL-07",
+        "printType": "Zlatotisak i kaširanje",
+        "additionalPricePerPiece": 500,
+        "maxWidthMm": 90,
+        "maxHeightMm": 50
+      }
+    ],
+    "likesCount": 12,
+    "dislikesCount": 0,
+    "comments": []
+  },
+  {
+    "printerId": "stampar2",
+    "printerName": "Print Master Plus",
+    "code": "PR-008",
+    "name": "PVC Baner platno sa ringlicama",
+    "description": "Spoljni reklamni baner otporan na sve vremenske uslove sa ojačanim ivicama.",
+    "category": "Štampa velikih formata",
+    "subcategory": "Banneri (reklamna platna)",
+    "unitPrice": 2200,
+    "stockQuantity": 80,
+    "availableColors": ["Bela"],
+    "imageUrl": "baner_platno.jpg",
+    "additionalImages": [],
+    "printServices": [
+      {
+        "serviceId": "USL-08",
+        "printType": "Veliki solventni print",
+        "additionalPricePerPiece": 300,
+        "maxWidthMm": 1500,
+        "maxHeightMm": 3000
+      }
+    ],
+    "likesCount": 40,
+    "dislikesCount": 1,
+    "comments": []
+  },
+  {
+    "printerId": "stampar3",
+    "printerName": "Mega Print DOO",
+    "code": "PR-009",
+    "name": "Mesh perforirano platno za fasade",
+    "description": "Specijalno mrežasto platno za vetrovite pozicije i velike građevinske grafike.",
+    "category": "Štampa velikih formata",
+    "subcategory": "Mesh platna",
+    "unitPrice": 2800,
+    "stockQuantity": 60,
+    "availableColors": ["Bela"],
+    "imageUrl": "platno_za_fasade.jpg",
+    "additionalImages": [],
+    "printServices": [
+      {
+        "serviceId": "USL-09",
+        "printType": "UV štampa velikog formata",
+        "additionalPricePerPiece": 400,
+        "maxWidthMm": 2000,
+        "maxHeightMm": 5000
+      }
+    ],
+    "likesCount": 15,
+    "dislikesCount": 0,
+    "comments": []
+  },
+  {
+    "printerId": "stampar1",
+    "printerName": "Copy Studio Kumanovska",
+    "code": "PR-010",
+    "name": "Aluminijumska hemijska olovka sa gravurom",
+    "description": "Elegantna metalna olovka sa laserskom gravurom vašeg logotipa.",
+    "category": "Štampa malih formata",
+    "subcategory": "Olovke",
+    "unitPrice": 180,
+    "stockQuantity": 1200,
+    "availableColors": ["Crna", "Plava", "Srebrna"],
+    "imageUrl": "metalna_hemijska_olovka_gravura.jpg",
+    "additionalImages": [],
+    "printServices": [
+      {
+        "serviceId": "USL-10",
+        "printType": "Laserska gravura",
+        "additionalPricePerPiece": 50,
+        "maxWidthMm": 50,
+        "maxHeightMm": 6
+      }
+    ],
+    "likesCount": 60,
+    "dislikesCount": 2,
+    "comments": []
+  }
+]
